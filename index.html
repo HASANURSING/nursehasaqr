@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Latihan - HASA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4 font-sans text-slate-800">
+    
+    <!-- Main Form Container -->
+    <div class="bg-white max-w-md w-full rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
+        
+        <!-- Header Section -->
+        <div class="bg-[#4c1c81] p-6 text-white text-center relative">
+            <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            <img src="https://i.postimg.cc/9fcWGRWZ/Hospital-Al-Sultan-Abdullah.png" alt="Logo HASA" class="h-12 mx-auto mb-4 brightness-0 invert relative z-10">
+            <h2 class="text-xl font-black relative z-10">Pengesahan Kehadiran</h2>
+            <p class="text-sm font-bold text-[#f59e0b] mt-1 relative z-10" id="display-title">Memuatkan maklumat sesi...</p>
+        </div>
+        
+        <!-- Form Section -->
+        <form id="form-registration" class="p-6 md:p-8 space-y-5 relative z-10">
+            <input type="hidden" id="reg-session-id">
+            
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nama Penuh</label>
+                <input type="text" id="r-name" required placeholder="Cth. SITI AMINAH BINTI ALI" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">No. Pekerja (ID Staf)</label>
+                <input type="text" id="r-id" required placeholder="Cth. U5-1234" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-bold font-mono text-[#4c1c81] shadow-inner">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Jabatan / Unit Semasa</label>
+                <select id="r-unit" required onchange="toggleUnitOther(this.value)" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
+                    <option value="">-- Sila Pilih Unit --</option>
+                    <!-- Populated by JS Master List -->
+                </select>
+                <input type="text" id="r-unit-other" placeholder="Nyatakan Nama Unit (Jika Lain-lain)" class="hidden mt-3 w-full p-3.5 bg-amber-50 border border-amber-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-bold shadow-inner">
+            </div>
+
+            <!-- KEMAS KINI: DROPDOWN JAWATAN DIKEMBALIKAN -->
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Jawatan & Gred</label>
+                <select id="r-role" required class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
+                    <option value="">-- Kategori Jawatan --</option>
+                    <option value="Jururawat U12">Jururawat U12</option>
+                    <option value="Jururawat U10">Jururawat U10</option>
+                    <option value="Jururawat U9">Jururawat U9</option>
+                    <option value="Jururawat U7">Jururawat U7</option>
+                    <option value="Jururawat U6">Jururawat U6</option>
+                    <option value="Jururawat U6 KUP">Jururawat U6 KUP</option>
+                    <option value="Jururawat U5">Jururawat U5</option>
+                    <option value="PPK U1">PPK U1</option>
+                    <option value="Lain-lain">Lain-lain</option>
+                </select>
+            </div>
+
+            <button type="submit" id="btn-submit" class="w-full bg-[#4c1c81] text-white py-4 rounded-xl font-bold hover:bg-[#3a1563] shadow-lg shadow-purple-900/20 transition-all mt-4 flex items-center justify-center gap-2 active:scale-95">
+                <span>Sahkan Kehadiran Saya</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </form>
+
+        <!-- Skrin Berjaya -->
+        <div id="success-message" class="hidden p-8 text-center animate-[fadeIn_0.5s_ease-out]">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800">Pendaftaran Berjaya!</h3>
+            <p class="text-sm font-medium text-slate-500 mt-3 leading-relaxed">Rekod kehadiran anda untuk sesi latihan ini telah selamat disimpan di dalam Pangkalan Data HASA.</p>
+            
+            <div id="gform-container" class="mt-8 hidden">
+                <p class="text-xs font-bold text-amber-700 bg-amber-50 p-3 rounded-lg mb-4 border border-amber-200">Perhatian: Sila lengkapkan Borang Penilaian Keberkesanan Latihan untuk kelulusan mata CPD.</p>
+                <a id="gform-link" href="#" target="_blank" class="block w-full bg-[#f59e0b] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 hover:-translate-y-0.5 transition-all">Buka Borang Penilaian Google</a>
+            </div>
+
+            <button onclick="window.close();" class="mt-6 text-sm font-bold text-slate-400 hover:text-slate-600 underline underline-offset-4">Tutup Tetingkap</button>
+        </div>
+    </div>
+
+    <script>
+        // MASTER SENARAI UNIT PENUH
+        const MASTER_UNITS_HTML = `
+            <optgroup label="Klinik Pakar HASA"><option value="Klinik Pakar Perubatan">Klinik Pakar Perubatan</option><option value="Klinik Pakar ORL">Klinik Pakar ORL</option><option value="Klinik Pakar Ophtalmologi">Klinik Pakar Ophtalmologi</option><option value="Klinik Pakar Pembedahan">Klinik Pakar Pembedahan</option><option value="Klinik Pakar Orthopedik">Klinik Pakar Orthopedik</option><option value="Klinik Pakar Wanita">Klinik Pakar Wanita</option><option value="Klinik Pakar Kanak-Kanak">Klinik Pakar Kanak-Kanak</option><option value="Klinik Warga">Klinik Warga</option><option value="Klinik Pakar MHU">Klinik Pakar MHU</option><option value="Klinik Eksekutif">Klinik Eksekutif</option></optgroup>
+            <optgroup label="Wad HASA"><option value="Wad 3A">Wad 3A</option><option value="Wad 3B">Wad 3B</option><option value="Wad 6A">Wad 6A</option><option value="Wad 6B">Wad 6B</option><option value="Wad 6C">Wad 6C</option><option value="Wad 6D">Wad 6D</option><option value="Wad 7A">Wad 7A</option><option value="Wad 7B">Wad 7B</option><option value="Wad 7C">Wad 7C</option><option value="Wad 7D">Wad 7D</option><option value="Wad 8A">Wad 8A</option><option value="Wad 8B">Wad 8B</option><option value="Wad 8C">Wad 8C</option><option value="Wad 8D">Wad 8D</option><option value="Wad 9A">Wad 9A</option><option value="Wad 9B">Wad 9B</option><option value="Wad Eksekutif">Wad Eksekutif</option><option value="Wad VIP">Wad VIP</option></optgroup>
+            <optgroup label="Unit Khas & Rawatan Harian"><option value="Unit Phlebotomi">Unit Phlebotomi</option><option value="Discharge Lounge">Discharge Lounge</option><option value="Rawatan Harian Onkologi / Hematologi">Rawatan Harian Onkologi / Hematologi</option><option value="Wad Rawatan Harian">Wad Rawatan Harian</option><option value="Pusat Rawatan Harian (Endoskopi)">Pusat Rawatan Harian (Endoskopi)</option><option value="Unit HD">Unit HD (Hemodialisis)</option><option value="Rehabilitasi">Rehabilitasi</option><option value="Radiologi">Radiologi</option><option value="Unit Penerimaan Bayi">Unit Penerimaan Bayi</option><option value="Unit Laktasi">Unit Laktasi</option><option value="CSSU">CSSU</option><option value="IPCT">IPCT</option></optgroup>
+            <optgroup label="Unit Kritikal & OT"><option value="ICU">ICU</option><option value="HDU">HDU</option><option value="NICU">NICU</option><option value="PICU">PICU</option><option value="Dewan Bersalin">Dewan Bersalin</option><option value="PAC">PAC</option><option value="Dewan Bedah Utama">Dewan Bedah Utama</option><option value="Daycare OT">Daycare OT</option><option value="Jabatan Kecemasan">Jabatan Kecemasan (ED)</option><option value="Dewan Bedah L&D">Dewan Bedah L&D</option></optgroup>
+            <optgroup label="Cawangan PPUITM"><option value="Klinik 1 PPUITM">Klinik 1 PPUITM</option><option value="Klinik 2 PPUITM">Klinik 2 PPUITM</option><option value="Klinik 3 PPUITM">Klinik 3 PPUITM</option><option value="Klinik Walk In PPUITM">Klinik Walk In PPUITM</option><option value="Wad 1 PPUITM">Wad 1 PPUITM</option><option value="Wad 2 PPUITM">Wad 2 PPUITM</option><option value="ICU PPUITM">ICU PPUITM</option><option value="CICU PPUITM">CICU PPUITM</option><option value="CCU PPUITM">CCU PPUITM</option><option value="CRW PPUITM">CRW PPUITM</option><option value="ICL PPUITM">ICL PPUITM</option><option value="Dewan Bedah PPUITM">Dewan Bedah PPUITM</option><option value="CSSU PPUITM">CSSU PPUITM</option><option value="HD PPUITM">HD PPUITM</option><option value="PHLEBOTOMI PPUITM">PHLEBOTOMI PPUITM</option><option value="NICL PPUITM">NICL PPUITM</option></optgroup>
+            <optgroup label="Pengurusan & Sokongan Klinikal">
+                <option value="Pengurusan Kejururawatan">Pengurusan Kejururawatan</option>
+                <option value="Admin Kejururawatan">Admin Kejururawatan</option>
+                <option value="Unit Latihan & Kompetensi">Unit Latihan & Kompetensi</option>
+                <option value="Unit Pengurusan Data Kejururawatan">Unit Pengurusan Data Kejururawatan</option>
+                <option value="Stor Pusat / Unit Linen PPUITM">Stor Pusat / Unit Linen PPUITM</option>
+                <option value="Forensik">Forensik</option>
+                <option value="Makmal Patologi">Makmal Patologi</option>
+            </optgroup>
+            <option value="Lain-lain">Lain-lain (Sila Nyatakan)</option>
+        `;
+
+        // URL Google Apps Script yang sah
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZIkmx0gCbl6Wgt90zYaBlQc6w6bGCDzswEyY8ppPDQvhG9ROWGtQl1resmdNj9ZrQ/exec';
+        
+        function toggleUnitOther(val) {
+            const el = document.getElementById('r-unit-other');
+            if(val === 'Lain-lain') {
+                el.classList.remove('hidden'); el.setAttribute('required', 'true');
+            } else {
+                el.classList.add('hidden'); el.removeAttribute('required'); el.value = '';
+            }
+        }
+
+        window.onload = () => {
+            document.getElementById('r-unit').innerHTML += MASTER_UNITS_HTML;
+            
+            // Dapatkan Data dari Kod QR (URL Params)
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('attend');
+            const sessionTitle = urlParams.get('title') || 'Sesi Latihan Umum';
+
+            if (sessionId) {
+                document.getElementById('reg-session-id').value = sessionId;
+                document.getElementById('display-title').innerText = sessionTitle;
+            } else {
+                document.getElementById('display-title').innerText = "Ralat: ID Sesi Tidak Sah";
+                document.getElementById('btn-submit').disabled = true;
+                document.getElementById('btn-submit').innerHTML = "Sila Imbas Kod QR Semula";
+                document.getElementById('btn-submit').classList.replace('bg-[#4c1c81]', 'bg-slate-400');
+            }
+        };
+
+        // KEMAS KINI: Penghantaran ke Backend Menggunakan URLSearchParams
+        document.getElementById('form-registration').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit');
+            btn.innerHTML = `Merekod Data... <svg class="animate-spin w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            btn.disabled = true;
+
+            const selUnit = document.getElementById('r-unit').value;
+            const finalUnit = selUnit === 'Lain-lain' ? document.getElementById('r-unit-other').value.trim().toUpperCase() : selUnit;
+
+            // Membina struktur data patuh Google (x-www-form-urlencoded)
+            const payloadData = new URLSearchParams();
+            payloadData.append('action', 'rekod_kehadiran');
+            payloadData.append('sessionId', document.getElementById('reg-session-id').value);
+            payloadData.append('sessionTitle', document.getElementById('display-title').innerText);
+            payloadData.append('staffName', document.getElementById('r-name').value.trim().toUpperCase());
+            payloadData.append('staffId', document.getElementById('r-id').value.trim().toUpperCase());
+            payloadData.append('unit', finalUnit);
+            payloadData.append('role', document.getElementById('r-role').value);
+            payloadData.append('timestamp', new Date().toISOString());
+
+            try {
+                // Menghantar data melepasi sekatan dengan parameter mode: 'no-cors'
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: payloadData
+                });
+                
+                // Paparkan skrin berjaya
+                document.getElementById('form-registration').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+                
+                // Semak dan sediakan pautan Google Form (jika penganjur letak gform)
+                const gformLink = new URLSearchParams(window.location.search).get('gform');
+                if(gformLink && gformLink.startsWith('http')) {
+                    document.getElementById('gform-container').classList.remove('hidden');
+                    document.getElementById('gform-link').href = gformLink;
+                }
+            } catch (error) {
+                alert("Terdapat ralat rangkaian. Sila semak capaian internet anda dan cuba lagi.");
+                btn.innerHTML = "Cuba Sekali Lagi";
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
