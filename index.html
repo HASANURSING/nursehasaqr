@@ -188,11 +188,12 @@
                 const currentTime = Date.now();
                 
                 // Gunakan perbezaan mutlak (Math.abs) untuk menyerap ralat jam telefon yang terlalu cepat atau terlalu lambat.
-                // Had toleransi ditetapkan pada 180 saat (3 minit).
+                // KEMAS KINI SEKURITI KETAT: Had toleransi dipotong dari 180 saat kepada 45 SAAT sahaja.
+                // Ini membunuh masa yang diperlukan untuk staf menghantar QR ke WhatsApp grup.
                 const ageInSeconds = Math.abs(currentTime - qrTime) / 1000;
 
-                if (ageInSeconds > 180) {
-                    // QR Code sudah melepasi toleransi 3 minit. Sekat!
+                if (ageInSeconds > 45) {
+                    // QR Code sudah melepasi toleransi 45 saat. Sekat dengan keras!
                     document.getElementById('expired-box').classList.remove('hidden');
                     return;
                 }
