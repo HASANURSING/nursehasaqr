@@ -95,6 +95,11 @@
                                 Semak Rekod Staf
                             </button>
                         </div>
+                        <div class="mt-4 text-center">
+                            <button type="button" onclick="openExternalReg()" class="text-xs font-bold text-uitm-purple hover:text-amber-600 underline transition-colors">
+                                Peserta Luar (Bukan Staf HASA)? Daftar di sini.
+                            </button>
+                        </div>
                     </div>
 
                     <!-- LANGKAH 2: PENGESAHAN (AUTO-FILLED) -->
@@ -111,19 +116,25 @@
                                 </div>
                             </div>
 
-                            <!-- Paparan Manual (Jika ID Tiada Dalam Sistem) -->
+                            <!-- Paparan Manual (Jika ID Tiada Dalam Sistem atau Peserta Luar) -->
                             <div id="display-manual" class="hidden space-y-3 mt-2">
-                                <p class="text-xs font-bold text-rose-600 bg-rose-100 p-2 rounded-lg text-center mb-3">ID tidak dijumpai. Sila lengkapkan butiran anda secara manual.</p>
+                                <p id="manual-msg" class="text-xs font-bold text-rose-600 bg-rose-100 p-2 rounded-lg text-center mb-3">ID tidak dijumpai. Sila lengkapkan butiran anda secara manual.</p>
+                                <input type="text" id="manual-id" placeholder="No. K/P atau ID" class="w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-mono font-semibold uppercase focus:border-uitm-purple">
                                 <input type="text" id="manual-name" placeholder="Nama Penuh" class="w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-semibold uppercase focus:border-uitm-purple">
                                 <select id="manual-unit" class="w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-semibold focus:border-uitm-purple">
                                     <option value="">-- Wad / Unit Bertugas --</option>
                                     <optgroup label="Pengurusan"><option value="Pengurusan Kejururawatan">Pengurusan Kejururawatan</option><option value="Unit Latihan & Kompetensi">Unit Latihan & Kompetensi</option></optgroup>
                                     <optgroup label="Klinik Pakar HASA"><option value="Klinik Pakar Perubatan">Klinik Pakar Perubatan</option><option value="Klinik Pakar ORL">Klinik Pakar ORL</option><option value="Klinik Pakar Ophtalmologi">Klinik Pakar Ophtalmologi</option><option value="Klinik Pakar Pembedahan">Klinik Pakar Pembedahan</option><option value="Klinik Pakar Orthopedik">Klinik Pakar Orthopedik</option><option value="Klinik Pakar Wanita">Klinik Pakar Wanita</option><option value="Klinik Pakar Kanak-Kanak">Klinik Pakar Kanak-Kanak</option><option value="Klinik Warga">Klinik Warga</option><option value="Klinik Pakar MHU">Klinik Pakar MHU</option><option value="Klinik Eksekutif">Klinik Eksekutif</option></optgroup>
                                     <optgroup label="Wad HASA"><option value="Wad 3A">Wad 3A</option><option value="Wad 3B">Wad 3B</option><option value="Wad 6A">Wad 6A</option><option value="Wad 6B">Wad 6B</option><option value="Wad 6C">Wad 6C</option><option value="Wad 6D">Wad 6D</option><option value="Wad 7A">Wad 7A</option><option value="Wad 7B">Wad 7B</option><option value="Wad 7C">Wad 7C</option><option value="Wad 7D">Wad 7D</option><option value="Wad 8A">Wad 8A</option><option value="Wad 8B">Wad 8B</option><option value="Wad 8C">Wad 8C</option><option value="Wad 8D">Wad 8D</option><option value="Wad 9A">Wad 9A</option><option value="Wad 9B">Wad 9B</option><option value="Wad Eksekutif">Wad Eksekutif</option><option value="Wad VIP">Wad VIP</option></optgroup>
-                                    <optgroup label="Lain-Lain"><option value="Dewan Bedah Utama">Dewan Bedah Utama</option><option value="ICU">ICU</option><option value="NICU">NICU</option><option value="Jabatan Kecemasan">Jabatan Kecemasan</option></optgroup>
+                                    <optgroup label="Lain-Lain HASA"><option value="Dewan Bedah Utama">Dewan Bedah Utama</option><option value="ICU">ICU</option><option value="NICU">NICU</option><option value="Jabatan Kecemasan">Jabatan Kecemasan</option></optgroup>
+                                    <optgroup label="Luar HASA">
+                                        <option value="Agensi Luar / KKM">Agensi Luar / KKM Lain</option>
+                                        <option value="Swasta / NGO">Swasta / NGO</option>
+                                        <option value="Orang Awam / Pelajar">Orang Awam / Pelajar</option>
+                                    </optgroup>
                                     <option value="Lain-lain" class="font-bold text-amber-600">Lain-lain (Taip Manual)</option>
                                 </select>
-                                <input type="text" id="manual-unit-lain" placeholder="Nyatakan Nama Unit..." class="hidden w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-semibold uppercase focus:border-uitm-purple">
+                                <input type="text" id="manual-unit-lain" placeholder="Nyatakan Nama Unit/Agensi..." class="hidden w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-semibold uppercase focus:border-uitm-purple">
                                 <select id="manual-role" class="w-full p-3 bg-white border border-slate-300 rounded-lg outline-none text-sm font-semibold focus:border-uitm-purple">
                                     <option value="">-- Jawatan --</option>
                                     <option value="JURURAWAT U12">Jururawat U12</option>
@@ -173,6 +184,7 @@
     <script>
         let dbStaff = [];
         let isManualMode = false;
+        let isExternalMode = false;
 
         // FUNGSI TARIK CSV DARI ADMIN PANGKALAN DATA (Read-Only & Pantas)
         async function fetchStaffDB() {
@@ -194,7 +206,7 @@
                 if(rows.length > 1) {
                     const headers = rows[0].map(h => h.toLowerCase());
                     let idxId = headers.findIndex(h => h.includes('id') || h.includes('ic') || h.includes('pekerja'));
-                    let idxName = headers.findIndex(h => h.includes('nama') || h.includes('name'));
+                    let idxName = headers.findIndex(h => h.includes('nama') || h.includes('name') || h.includes('kakitangan'));
                     let idxUnit = headers.findIndex(h => h.includes('unit') || h.includes('wad') || h.includes('lokasi'));
                     let idxRole = headers.findIndex(h => h.includes('jawatan') || h.includes('role') || h.includes('gred'));
                     
@@ -214,7 +226,6 @@
                 console.warn("Ralat rangkaian ketika memuat DB Staf. Mod manual akan digunakan.", err);
             }
             
-            // Paparkan borang selepas sedia
             document.getElementById('db-loading').classList.add('hidden');
             document.getElementById('reg-form').classList.remove('hidden');
         }
@@ -224,16 +235,15 @@
             const aid = urlParams.get('attend');
             const title = urlParams.get('title');
             const gform = urlParams.get('gform');
-            const t = urlParams.get('t'); // Cop Masa dari QR Code
-            const m = urlParams.get('m'); // Imuniti Manual Admin
+            const t = urlParams.get('t'); 
+            const m = urlParams.get('m'); 
 
-            // SEMAKAN 1: Pautan Kosong
             if (!aid) {
                 document.getElementById('error-box').classList.remove('hidden');
                 return;
             }
 
-            // SEMAKAN 2: SISTEM KESELAMATAN MASA (TTL - TIME TO LIVE)
+            // SISTEM KESELAMATAN MASA (TTL - TIME TO LIVE: 45 SAAT)
             if (m !== '1') {
                 if (!t) {
                     document.getElementById('error-box').classList.remove('hidden');
@@ -244,16 +254,14 @@
 
                 const qrTime = parseInt(t);
                 const currentTime = Date.now();
-                
-                // Toleransi masa dikunci pada 45 Saat seperti yang didebatkan!
                 const ageInSeconds = Math.abs(currentTime - qrTime) / 1000;
+                
                 if (ageInSeconds > 45) {
                     document.getElementById('expired-box').classList.remove('hidden');
                     return;
                 }
             }
 
-            // Lulus Semakan: Muat turun Pangkalan Data CSV
             document.getElementById('form-box').classList.remove('hidden');
             document.getElementById('display-id').innerText = `ID: ${aid}`;
             document.getElementById('display-title').innerText = title ? decodeURIComponent(title) : 'Sesi Latihan Tanpa Tajuk';
@@ -262,11 +270,30 @@
             document.getElementById('hidden-title').value = title ? decodeURIComponent(title) : 'Sesi Latihan Tanpa Tajuk';
             document.getElementById('hidden-gform').value = gform ? decodeURIComponent(gform) : '';
 
-            // Mulakan muat turun di latar belakang
             fetchStaffDB();
         };
 
-        // FUNGSI SEMAK ID STAF & ISI BORANG
+        // MOD PESERTA LUAR HASA
+        window.openExternalReg = function() {
+            isManualMode = true;
+            isExternalMode = true;
+
+            document.getElementById('step-1-id').classList.add('hidden');
+            document.getElementById('step-2-confirm').classList.remove('hidden');
+            document.getElementById('display-auto').classList.add('hidden');
+            document.getElementById('display-manual').classList.remove('hidden');
+
+            document.getElementById('manual-msg').className = "text-xs font-bold text-uitm-purple bg-purple-100 p-2 rounded-lg text-center mb-3";
+            document.getElementById('manual-msg').innerText = "Peserta Luar: Sila lengkapkan butiran anda di bawah.";
+
+            document.getElementById('manual-id').setAttribute('required', 'true');
+            document.getElementById('manual-id').value = ''; 
+            document.getElementById('manual-name').setAttribute('required', 'true');
+            document.getElementById('manual-unit').setAttribute('required', 'true');
+            document.getElementById('manual-role').setAttribute('required', 'true');
+        };
+
+        // FUNGSI SEMAK ID STAF
         window.verifyStaffID = function() {
             const idInput = document.getElementById('inp-search-id').value.trim().toUpperCase();
             if(!idInput) { alert("Sila masukkan No. Pekerja / ID anda!"); return; }
@@ -278,32 +305,36 @@
             document.getElementById('step-2-confirm').classList.remove('hidden');
 
             if(staffFound) {
-                // Berjaya Jumpa dalam CSV
                 isManualMode = false;
+                isExternalMode = false;
                 document.getElementById('display-auto').classList.remove('hidden');
                 document.getElementById('display-manual').classList.add('hidden');
                 
-                // Paparkan di UI
                 document.getElementById('confirm-name').innerText = staffFound.name;
                 document.getElementById('confirm-unit').innerText = staffFound.unit;
                 document.getElementById('confirm-role').innerText = staffFound.role;
                 
-                // Set hidden inputs untuk Sheet
+                // Pra-kunci data
                 document.getElementById('hidden-staff-name').value = staffFound.name;
                 document.getElementById('hidden-unit').value = staffFound.unit;
                 document.getElementById('hidden-role').value = staffFound.role;
 
-                // Kosongkan requirement manual
                 document.getElementById('manual-name').removeAttribute('required');
                 document.getElementById('manual-unit').removeAttribute('required');
                 document.getElementById('manual-role').removeAttribute('required');
+                document.getElementById('manual-id').removeAttribute('required');
             } else {
-                // Gagal Jumpa (Staff Baharu / Pelajar / Salah Eja DB) - Buka Mod Manual
                 isManualMode = true;
+                isExternalMode = false;
                 document.getElementById('display-auto').classList.add('hidden');
                 document.getElementById('display-manual').classList.remove('hidden');
 
-                // Paksa isi manual
+                document.getElementById('manual-msg').className = "text-xs font-bold text-rose-600 bg-rose-100 p-2 rounded-lg text-center mb-3";
+                document.getElementById('manual-msg').innerText = "ID tidak dijumpai. Sila lengkapkan butiran anda secara manual.";
+
+                document.getElementById('manual-id').value = idInput;
+
+                document.getElementById('manual-id').setAttribute('required', 'true');
                 document.getElementById('manual-name').setAttribute('required', 'true');
                 document.getElementById('manual-unit').setAttribute('required', 'true');
                 document.getElementById('manual-role').setAttribute('required', 'true');
@@ -315,7 +346,6 @@
             document.getElementById('step-1-id').classList.remove('hidden');
         };
 
-        // LOGIK "LAIN-LAIN" UNIT MANUAL
         document.getElementById('manual-unit').addEventListener('change', function(e) {
             const lainInput = document.getElementById('manual-unit-lain');
             if (e.target.value === 'Lain-lain') {
@@ -327,24 +357,39 @@
 
         let isSubmitting = false;
 
+        // VAKSIN RACE CONDITION: Pintas butang submit, kunci nilai, dan hantar secara paksa.
         document.getElementById('reg-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // HALANG AUTO-SUBMIT BROWSER YANG MUNGKIN TERCICIR DATA
             isSubmitting = true;
-            document.getElementById('hidden-timestamp').value = new Date().toISOString();
             
-            // Tangkap nilai jika pengguna menggunakan mod Manual (ID tiada dalam DB)
+            const btn = document.getElementById('btn-submit');
+            btn.innerHTML = `<span class="loader"></span> Menyimpan Rekod...`;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+
+            // MENGUNCI DATA SECARA MUKTAMAD SEBELUM DIHANTAR
             if(isManualMode) {
-                document.getElementById('hidden-staff-name').value = document.getElementById('manual-name').value.trim().toUpperCase();
+                document.getElementById('hidden-staff-id').value = document.getElementById('manual-id').value.trim().toUpperCase();
+                
+                const rawName = document.getElementById('manual-name').value.trim().toUpperCase();
+                document.getElementById('hidden-staff-name').value = rawName ? rawName : "TIADA NAMA";
                 
                 const selUnit = document.getElementById('manual-unit').value;
                 document.getElementById('hidden-unit').value = (selUnit === 'Lain-lain') ? document.getElementById('manual-unit-lain').value.trim().toUpperCase() : selUnit;
                 
                 const selRole = document.getElementById('manual-role').value;
                 document.getElementById('hidden-role').value = (selRole === 'Lain-lain') ? 'Lain-Lain' : selRole;
+            } else {
+                // Failsafe jika "confirm-name" masih kosong atas sebab aneh
+                const rawName = document.getElementById('confirm-name').innerText.trim().toUpperCase();
+                if (rawName && rawName !== '-') {
+                    document.getElementById('hidden-staff-name').value = rawName;
+                }
             }
 
-            const btn = document.getElementById('btn-submit');
-            btn.innerHTML = `<span class="loader"></span> Menyimpan Rekod...`;
-            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            document.getElementById('hidden-timestamp').value = new Date().toISOString();
+
+            // PENGHANTARAN MANUAl (Memintas perlumbaan masa DOM)
+            HTMLFormElement.prototype.submit.call(this);
         });
 
         document.getElementById('hidden_iframe').addEventListener('load', function() {
@@ -357,7 +402,6 @@
                     document.getElementById('gform-container').classList.remove('hidden');
                     document.getElementById('gform-link').href = gformUrl;
                     
-                    // AUTO-REDIRECT selepas 2.5 saat
                     setTimeout(() => {
                         window.location.href = gformUrl;
                     }, 2500);
