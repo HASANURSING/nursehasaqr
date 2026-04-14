@@ -3,189 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Latihan - HASA</title>
+    <title>Pendaftaran Kehadiran Latihan HASA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+        body { background-color: #f8fafc; }
+        .bg-uitm-purple { background-color: #4c1c81; }
+        .text-uitm-purple { color: #4c1c81; }
+        .border-uitm-purple { border-color: #4c1c81; }
+        .bg-uitm-gold { background-color: #f59e0b; }
+        .text-uitm-gold { color: #f59e0b; }
+        
+        .loader {
+            border: 3px solid #f3f3f3; border-top: 3px solid #ffffff; border-radius: 50%;
+            width: 20px; height: 20px; animation: spin 1s linear infinite;
+            display: inline-block; vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4 font-sans text-slate-800">
-    
-    <!-- Main Form Container -->
-    <div class="bg-white max-w-md w-full rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
+<body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col justify-center py-6 px-4">
+
+    <div class="max-w-md w-full mx-auto relative z-10">
         
-        <!-- Header Section -->
-        <div class="bg-[#4c1c81] p-6 text-white text-center relative">
-            <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-            <img src="https://i.postimg.cc/9fcWGRWZ/Hospital-Al-Sultan-Abdullah.png" alt="Logo HASA" class="h-12 mx-auto mb-4 brightness-0 invert relative z-10">
-            <h2 class="text-xl font-black relative z-10">Pengesahan Kehadiran</h2>
-            <p class="text-sm font-bold text-[#f59e0b] mt-1 relative z-10" id="display-title">Memuatkan maklumat sesi...</p>
+        <!-- Header -->
+        <div class="text-center mb-6 animate-[fadeIn_0.5s_ease-out]">
+            <img src="https://i.postimg.cc/9fcWGRWZ/Hospital-Al-Sultan-Abdullah.png" alt="Logo HASA" class="h-16 w-auto mx-auto mb-4 drop-shadow-md">
+            <h1 class="text-xl font-black text-uitm-purple leading-tight">Pengesahan Kehadiran Latihan</h1>
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1">Jabatan Kejururawatan HASA</p>
         </div>
-        
-        <!-- Form Section -->
-        <form id="form-registration" class="p-6 md:p-8 space-y-5 relative z-10">
-            <input type="hidden" id="reg-session-id">
+
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-uitm-purple to-uitm-gold"></div>
             
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nama Penuh</label>
-                <input type="text" id="r-name" required placeholder="Cth. SITI AMINAH BINTI ALI" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
+            <!-- KOTAK RALAT: PAUTAN TIDAK LENGKAP -->
+            <div id="error-box" class="hidden p-8 text-center">
+                <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 mb-2">Pautan Tidak Sah</h2>
+                <p class="text-sm text-slate-500">Sila gunakan peranti anda untuk mengimbas (scan) Kod QR rasmi latihan sekali lagi.</p>
             </div>
 
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">No. Pekerja (ID Staf)</label>
-                <input type="text" id="r-id" required placeholder="Cth. U5-1234" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-bold font-mono text-[#4c1c81] shadow-inner">
+            <!-- KOTAK RALAT BAHARU: MASA TAMAT (TTL) -->
+            <div id="expired-box" class="hidden p-8 text-center animate-[fadeIn_0.3s_ease-out]">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 mb-2">Sesi QR Luput Masa</h2>
+                <p class="text-sm text-slate-500 mb-4">Gambar Kod QR ini telah tamat tempoh dan tidak boleh digunakan lagi demi menjaga integriti kehadiran.</p>
+                <div class="bg-amber-50 border border-amber-200 text-amber-800 text-xs p-3 rounded-lg font-bold">
+                    Sila pandang ke skrin hadapan dan imbas Kod QR yang baharu.
+                </div>
             </div>
 
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Jabatan / Unit Semasa</label>
-                <select id="r-unit" required onchange="toggleUnitOther(this.value)" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
-                    <option value="">-- Sila Pilih Unit --</option>
-                    <!-- Populated by JS Master List -->
-                </select>
-                <input type="text" id="r-unit-other" placeholder="Nyatakan Nama Unit (Jika Lain-lain)" class="hidden mt-3 w-full p-3.5 bg-amber-50 border border-amber-200 rounded-xl outline-none uppercase focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-bold shadow-inner">
+            <div id="form-box" class="hidden p-6 sm:p-8 animate-[fadeIn_0.5s_ease-out]">
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl mb-6 text-center">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Anda Sedang Mendaftar Untuk:</p>
+                    <h3 id="display-title" class="text-lg font-black text-uitm-purple leading-tight">-</h3>
+                    <p id="display-id" class="text-xs text-slate-500 mt-1 font-mono bg-white inline-block px-2 py-0.5 border border-slate-200 rounded-md">ID: -</p>
+                </div>
+
+                <!-- BORANG ASLI (NATIVE FORM) -->
+                <form id="reg-form" action="https://script.google.com/macros/s/AKfycbwZIkmx0gCbl6Wgt90zYaBlQc6w6bGCDzswEyY8ppPDQvhG9ROWGtQl1resmdNj9ZrQ/exec" method="GET" target="hidden_iframe" class="space-y-4">
+                    
+                    <input type="hidden" name="action" value="rekod_kehadiran">
+                    <input type="hidden" name="timestamp" id="hidden-timestamp">
+                    <input type="hidden" name="sessionId" id="hidden-aid">
+                    <input type="hidden" name="sessionTitle" id="hidden-title">
+                    
+                    <input type="hidden" name="unit" id="hidden-final-unit">
+                    <input type="hidden" name="role" id="hidden-final-role">
+                    
+                    <input type="hidden" id="hidden-gform">
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5 ml-1">Nama Penuh Kakitangan</label>
+                        <input type="text" name="staffName" id="inp-name" required placeholder="Cth: Siti Aminah Binti Ahmad" class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple focus:border-transparent transition-all text-sm font-semibold text-slate-800 uppercase">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5 ml-1">No. Pekerja / ID</label>
+                        <input type="text" name="staffId" id="inp-id" required placeholder="Cth: U5-1234" class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple focus:border-transparent transition-all text-sm font-mono font-bold uppercase text-slate-800">
+                    </div>
+
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5 ml-1">Wad / Unit Bertugas</label>
+                        <select id="inp-unit" required class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple focus:border-transparent transition-all text-sm font-semibold text-slate-800">
+                            <option value="">-- Pilih Lokasi Bertugas --</option>
+                            <optgroup label="Klinik Pakar HASA">
+                                <option value="Klinik Pakar Perubatan">Klinik Pakar Perubatan</option><option value="Klinik Pakar ORL">Klinik Pakar ORL</option><option value="Klinik Pakar Ophtalmologi">Klinik Pakar Ophtalmologi</option><option value="Klinik Pakar Pembedahan">Klinik Pakar Pembedahan</option><option value="Klinik Pakar Orthopedik">Klinik Pakar Orthopedik</option><option value="Klinik Pakar Wanita">Klinik Pakar Wanita</option><option value="Klinik Pakar Kanak-Kanak">Klinik Pakar Kanak-Kanak</option><option value="Klinik Warga">Klinik Warga</option><option value="Klinik Pakar MHU">Klinik Pakar MHU</option><option value="Klinik Eksekutif">Klinik Eksekutif</option>
+                            </optgroup>
+                            <optgroup label="Wad HASA">
+                                <option value="Wad 3A">Wad 3A</option><option value="Wad 3B">Wad 3B</option><option value="Wad 6A">Wad 6A</option><option value="Wad 6B">Wad 6B</option><option value="Wad 6C">Wad 6C</option><option value="Wad 6D">Wad 6D</option><option value="Wad 7A">Wad 7A</option><option value="Wad 7B">Wad 7B</option><option value="Wad 7C">Wad 7C</option><option value="Wad 7D">Wad 7D</option><option value="Wad 8A">Wad 8A</option><option value="Wad 8B">Wad 8B</option><option value="Wad 8C">Wad 8C</option><option value="Wad 8D">Wad 8D</option><option value="Wad 9A">Wad 9A</option><option value="Wad 9B">Wad 9B</option><option value="Wad Eksekutif">Wad Eksekutif</option><option value="Wad VIP">Wad VIP</option>
+                            </optgroup>
+                            <optgroup label="Unit Khas & Rawatan Harian">
+                                <option value="Unit Phlebotomi">Unit Phlebotomi</option><option value="Discharge Lounge">Discharge Lounge</option><option value="Rawatan Harian Onkologi / Hematologi">Rawatan Harian Onkologi / Hematologi</option><option value="Wad Rawatan Harian">Wad Rawatan Harian</option><option value="Pusat Rawatan Harian (Endoskopi)">Pusat Rawatan Harian (Endoskopi)</option><option value="Unit HD">Unit HD (Hemodialisis)</option><option value="Rehabilitasi">Rehabilitasi</option><option value="Radiologi">Radiologi</option><option value="Unit Penerimaan Bayi">Unit Penerimaan Bayi</option><option value="Unit Laktasi">Unit Laktasi</option><option value="CSSU">CSSU</option><option value="IPCT">IPCT</option>
+                            </optgroup>
+                            <optgroup label="Unit Kritikal & OT">
+                                <option value="ICU">ICU</option><option value="HDU">HDU</option><option value="NICU">NICU</option><option value="PICU">PICU</option><option value="Dewan Bersalin">Dewan Bersalin</option><option value="PAC">PAC</option><option value="Dewan Bedah Utama">Dewan Bedah Utama</option><option value="Daycare OT">Daycare OT</option><option value="Jabatan Kecemasan">Jabatan Kecemasan (ED)</option><option value="Dewan Bedah L&D">Dewan Bedah L&D</option>
+                            </optgroup>
+                            <option value="Lain-lain" class="bg-amber-50 font-bold text-amber-800">Lain-lain (Nyatakan...)</option>
+                        </select>
+                        <input type="text" id="inp-unit-lain" placeholder="Sila taip nama Unit/Wad anda" class="hidden mt-2 w-full p-3.5 bg-amber-50 border border-amber-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple transition-all text-sm font-semibold text-slate-800 uppercase animate-[fadeIn_0.3s_ease-out]">
+                    </div>
+
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5 ml-1">Jawatan / Kategori Pekerjaan</label>
+                        <select id="inp-role" required class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple focus:border-transparent transition-all text-sm font-semibold text-slate-800">
+                            <option value="">-- Pilih Kategori Jawatan --</option>
+                            <optgroup label="Kumpulan Kejururawatan">
+                                <option value="JURURAWAT U12">Jururawat U12</option>
+                                <option value="JURURAWAT U10">Jururawat U10</option>
+                                <option value="JURURAWAT U9">Jururawat U9</option>
+                                <option value="JURURAWAT U6">Jururawat U6</option>
+                                <option value="JURURAWAT U6 KUP">Jururawat U6 KUP</option>
+                                <option value="JURURAWAT U5">Jururawat U5</option>
+                            </optgroup>
+                            <optgroup label="Kumpulan Sokongan">
+                                <option value="PPK U1">PPK U1</option>
+                                <option value="PT N1">PT N1</option>
+                            </optgroup>
+                            <option value="Lain-lain" class="bg-amber-50 font-bold text-amber-800">Lain-lain (Nyatakan...)</option>
+                        </select>
+                        <input type="text" id="inp-role-lain" placeholder="Sila taip nama Jawatan anda" class="hidden mt-2 w-full p-3.5 bg-amber-50 border border-amber-300 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-uitm-purple transition-all text-sm font-semibold text-slate-800 uppercase animate-[fadeIn_0.3s_ease-out]">
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" id="btn-submit" class="w-full bg-uitm-purple text-white py-4 rounded-xl font-bold text-lg hover:bg-[#3a1563] shadow-lg shadow-purple-900/30 transition-all active:scale-[0.98] flex justify-center items-center">
+                            Sahkan Kehadiran
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <!-- KEMAS KINI: DROPDOWN JAWATAN DIKEMBALIKAN -->
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Jawatan & Gred</label>
-                <select id="r-role" required class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-[#4c1c81] transition-all text-sm font-semibold shadow-inner">
-                    <option value="">-- Kategori Jawatan --</option>
-                    <option value="Jururawat U12">Jururawat U12</option>
-                    <option value="Jururawat U10">Jururawat U10</option>
-                    <option value="Jururawat U9">Jururawat U9</option>
-                    <option value="Jururawat U7">Jururawat U7</option>
-                    <option value="Jururawat U6">Jururawat U6</option>
-                    <option value="Jururawat U6 KUP">Jururawat U6 KUP</option>
-                    <option value="Jururawat U5">Jururawat U5</option>
-                    <option value="PPK U1">PPK U1</option>
-                    <option value="Lain-lain">Lain-lain</option>
-                </select>
+            <div id="success-box" class="hidden p-8 text-center bg-emerald-50">
+                <div class="w-20 h-20 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30 animate-[fadeIn_0.5s_ease-out]">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-black text-emerald-800 mb-2">Pendaftaran Berjaya!</h2>
+                <p class="text-sm text-emerald-700 font-medium mb-6">Kehadiran anda telah dihantar ke pelayan utama untuk direkodkan.</p>
+                
+                <div id="gform-container" class="hidden mt-6 pt-6 border-t border-emerald-200">
+                    <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-3">Tindakan Seterusnya</p>
+                    <a id="gform-link" href="#" target="_blank" class="block w-full bg-white text-emerald-700 border border-emerald-300 py-3 rounded-xl font-bold hover:bg-emerald-100 transition-all shadow-sm">
+                        Isi Borang Penilaian Keberkesanan
+                    </a>
+                </div>
             </div>
-
-            <button type="submit" id="btn-submit" class="w-full bg-[#4c1c81] text-white py-4 rounded-xl font-bold hover:bg-[#3a1563] shadow-lg shadow-purple-900/20 transition-all mt-4 flex items-center justify-center gap-2 active:scale-95">
-                <span>Sahkan Kehadiran Saya</span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </button>
-        </form>
-
-        <!-- Skrin Berjaya -->
-        <div id="success-message" class="hidden p-8 text-center animate-[fadeIn_0.5s_ease-out]">
-            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 class="text-2xl font-black text-slate-800">Pendaftaran Berjaya!</h3>
-            <p class="text-sm font-medium text-slate-500 mt-3 leading-relaxed">Rekod kehadiran anda untuk sesi latihan ini telah selamat disimpan di dalam Pangkalan Data HASA.</p>
-            
-            <div id="gform-container" class="mt-8 hidden">
-                <p class="text-xs font-bold text-amber-700 bg-amber-50 p-3 rounded-lg mb-4 border border-amber-200">Perhatian: Sila lengkapkan Borang Penilaian Keberkesanan Latihan untuk kelulusan mata CPD.</p>
-                <a id="gform-link" href="#" target="_blank" class="block w-full bg-[#f59e0b] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 hover:-translate-y-0.5 transition-all">Buka Borang Penilaian Google</a>
-            </div>
-
-            <button onclick="window.close();" class="mt-6 text-sm font-bold text-slate-400 hover:text-slate-600 underline underline-offset-4">Tutup Tetingkap</button>
         </div>
+        <p class="text-center text-[10px] font-bold text-slate-400 mt-6 uppercase tracking-widest">Sistem Pengurusan Latihan & CPD<br>© 2026 Jabatan Kejururawatan HASA</p>
     </div>
 
+    <div class="fixed top-0 left-0 w-full h-64 bg-uitm-purple z-0 rounded-b-[40px] opacity-10"></div>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" class="hidden"></iframe>
+
     <script>
-        // MASTER SENARAI UNIT PENUH
-        const MASTER_UNITS_HTML = `
-            <optgroup label="Klinik Pakar HASA"><option value="Klinik Pakar Perubatan">Klinik Pakar Perubatan</option><option value="Klinik Pakar ORL">Klinik Pakar ORL</option><option value="Klinik Pakar Ophtalmologi">Klinik Pakar Ophtalmologi</option><option value="Klinik Pakar Pembedahan">Klinik Pakar Pembedahan</option><option value="Klinik Pakar Orthopedik">Klinik Pakar Orthopedik</option><option value="Klinik Pakar Wanita">Klinik Pakar Wanita</option><option value="Klinik Pakar Kanak-Kanak">Klinik Pakar Kanak-Kanak</option><option value="Klinik Warga">Klinik Warga</option><option value="Klinik Pakar MHU">Klinik Pakar MHU</option><option value="Klinik Eksekutif">Klinik Eksekutif</option></optgroup>
-            <optgroup label="Wad HASA"><option value="Wad 3A">Wad 3A</option><option value="Wad 3B">Wad 3B</option><option value="Wad 6A">Wad 6A</option><option value="Wad 6B">Wad 6B</option><option value="Wad 6C">Wad 6C</option><option value="Wad 6D">Wad 6D</option><option value="Wad 7A">Wad 7A</option><option value="Wad 7B">Wad 7B</option><option value="Wad 7C">Wad 7C</option><option value="Wad 7D">Wad 7D</option><option value="Wad 8A">Wad 8A</option><option value="Wad 8B">Wad 8B</option><option value="Wad 8C">Wad 8C</option><option value="Wad 8D">Wad 8D</option><option value="Wad 9A">Wad 9A</option><option value="Wad 9B">Wad 9B</option><option value="Wad Eksekutif">Wad Eksekutif</option><option value="Wad VIP">Wad VIP</option></optgroup>
-            <optgroup label="Unit Khas & Rawatan Harian"><option value="Unit Phlebotomi">Unit Phlebotomi</option><option value="Discharge Lounge">Discharge Lounge</option><option value="Rawatan Harian Onkologi / Hematologi">Rawatan Harian Onkologi / Hematologi</option><option value="Wad Rawatan Harian">Wad Rawatan Harian</option><option value="Pusat Rawatan Harian (Endoskopi)">Pusat Rawatan Harian (Endoskopi)</option><option value="Unit HD">Unit HD (Hemodialisis)</option><option value="Rehabilitasi">Rehabilitasi</option><option value="Radiologi">Radiologi</option><option value="Unit Penerimaan Bayi">Unit Penerimaan Bayi</option><option value="Unit Laktasi">Unit Laktasi</option><option value="CSSU">CSSU</option><option value="IPCT">IPCT</option></optgroup>
-            <optgroup label="Unit Kritikal & OT"><option value="ICU">ICU</option><option value="HDU">HDU</option><option value="NICU">NICU</option><option value="PICU">PICU</option><option value="Dewan Bersalin">Dewan Bersalin</option><option value="PAC">PAC</option><option value="Dewan Bedah Utama">Dewan Bedah Utama</option><option value="Daycare OT">Daycare OT</option><option value="Jabatan Kecemasan">Jabatan Kecemasan (ED)</option><option value="Dewan Bedah L&D">Dewan Bedah L&D</option></optgroup>
-            <optgroup label="Cawangan PPUITM"><option value="Klinik 1 PPUITM">Klinik 1 PPUITM</option><option value="Klinik 2 PPUITM">Klinik 2 PPUITM</option><option value="Klinik 3 PPUITM">Klinik 3 PPUITM</option><option value="Klinik Walk In PPUITM">Klinik Walk In PPUITM</option><option value="Wad 1 PPUITM">Wad 1 PPUITM</option><option value="Wad 2 PPUITM">Wad 2 PPUITM</option><option value="ICU PPUITM">ICU PPUITM</option><option value="CICU PPUITM">CICU PPUITM</option><option value="CCU PPUITM">CCU PPUITM</option><option value="CRW PPUITM">CRW PPUITM</option><option value="ICL PPUITM">ICL PPUITM</option><option value="Dewan Bedah PPUITM">Dewan Bedah PPUITM</option><option value="CSSU PPUITM">CSSU PPUITM</option><option value="HD PPUITM">HD PPUITM</option><option value="PHLEBOTOMI PPUITM">PHLEBOTOMI PPUITM</option><option value="NICL PPUITM">NICL PPUITM</option></optgroup>
-            <optgroup label="Pengurusan & Sokongan Klinikal">
-                <option value="Pengurusan Kejururawatan">Pengurusan Kejururawatan</option>
-                <option value="Admin Kejururawatan">Admin Kejururawatan</option>
-                <option value="Unit Latihan & Kompetensi">Unit Latihan & Kompetensi</option>
-                <option value="Unit Pengurusan Data Kejururawatan">Unit Pengurusan Data Kejururawatan</option>
-                <option value="Stor Pusat / Unit Linen PPUITM">Stor Pusat / Unit Linen PPUITM</option>
-                <option value="Forensik">Forensik</option>
-                <option value="Makmal Patologi">Makmal Patologi</option>
-            </optgroup>
-            <option value="Lain-lain">Lain-lain (Sila Nyatakan)</option>
-        `;
-
-        // URL Google Apps Script yang sah
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZIkmx0gCbl6Wgt90zYaBlQc6w6bGCDzswEyY8ppPDQvhG9ROWGtQl1resmdNj9ZrQ/exec';
-        
-        function toggleUnitOther(val) {
-            const el = document.getElementById('r-unit-other');
-            if(val === 'Lain-lain') {
-                el.classList.remove('hidden'); el.setAttribute('required', 'true');
-            } else {
-                el.classList.add('hidden'); el.removeAttribute('required'); el.value = '';
-            }
-        }
-
         window.onload = () => {
-            document.getElementById('r-unit').innerHTML += MASTER_UNITS_HTML;
-            
-            // Dapatkan Data dari Kod QR (URL Params)
             const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get('attend');
-            const sessionTitle = urlParams.get('title') || 'Sesi Latihan Umum';
+            const aid = urlParams.get('attend');
+            const title = urlParams.get('title');
+            const gform = urlParams.get('gform');
+            const t = urlParams.get('t'); // Cop Masa (Timestamp) dari QR Code
+            const m = urlParams.get('m'); // Imuniti Manual oleh Admin
 
-            if (sessionId) {
-                document.getElementById('reg-session-id').value = sessionId;
-                document.getElementById('display-title').innerText = sessionTitle;
-            } else {
-                document.getElementById('display-title').innerText = "Ralat: ID Sesi Tidak Sah";
-                document.getElementById('btn-submit').disabled = true;
-                document.getElementById('btn-submit').innerHTML = "Sila Imbas Kod QR Semula";
-                document.getElementById('btn-submit').classList.replace('bg-[#4c1c81]', 'bg-slate-400');
+            // SEMAKAN 1: Pautan Kosong
+            if (!aid) {
+                document.getElementById('error-box').classList.remove('hidden');
+                return;
             }
-        };
 
-        // KEMAS KINI: Penghantaran ke Backend Menggunakan URLSearchParams
-        document.getElementById('form-registration').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-submit');
-            btn.innerHTML = `Merekod Data... <svg class="animate-spin w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
-            btn.disabled = true;
-
-            const selUnit = document.getElementById('r-unit').value;
-            const finalUnit = selUnit === 'Lain-lain' ? document.getElementById('r-unit-other').value.trim().toUpperCase() : selUnit;
-
-            // Membina struktur data patuh Google (x-www-form-urlencoded)
-            const payloadData = new URLSearchParams();
-            payloadData.append('action', 'rekod_kehadiran');
-            payloadData.append('sessionId', document.getElementById('reg-session-id').value);
-            payloadData.append('sessionTitle', document.getElementById('display-title').innerText);
-            payloadData.append('staffName', document.getElementById('r-name').value.trim().toUpperCase());
-            payloadData.append('staffId', document.getElementById('r-id').value.trim().toUpperCase());
-            payloadData.append('unit', finalUnit);
-            payloadData.append('role', document.getElementById('r-role').value);
-            payloadData.append('timestamp', new Date().toISOString());
-
-            try {
-                // Menghantar data melepasi sekatan dengan parameter mode: 'no-cors'
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: payloadData
-                });
-                
-                // Paparkan skrin berjaya
-                document.getElementById('form-registration').classList.add('hidden');
-                document.getElementById('success-message').classList.remove('hidden');
-                
-                // Semak dan sediakan pautan Google Form (jika penganjur letak gform)
-                const gformLink = new URLSearchParams(window.location.search).get('gform');
-                if(gformLink && gformLink.startsWith('http')) {
-                    document.getElementById('gform-container').classList.remove('hidden');
-                    document.getElementById('gform-link').href = gformLink;
+            // SEMAKAN 2: SISTEM KESELAMATAN MASA (TTL - TIME TO LIVE)
+            // Jika ia bukan "Daftar Manual (m=1)", maka kita kuatkuasakan semakan masa
+            if (m !== '1') {
+                if (!t) {
+                    // Tiada data masa (Kemungkinan diubah suai atau url copy-paste dari sumber lama)
+                    document.getElementById('error-box').classList.remove('hidden');
+                    document.querySelector('#error-box h2').innerText = "Pautan Ditolak";
+                    document.querySelector('#error-box p').innerText = "Integriti pautan gagal disahkan. Pastikan anda mengimbas kod dari skrin utama sahaja.";
+                    return;
                 }
-            } catch (error) {
-                alert("Terdapat ralat rangkaian. Sila semak capaian internet anda dan cuba lagi.");
-                btn.innerHTML = "Cuba Sekali Lagi";
-                btn.disabled = false;
+
+                const qrTime = parseInt(t);
+                const currentTime = Date.now();
+                
+                // Gunakan perbezaan mutlak (Math.abs) untuk menyerap ralat jam telefon yang terlalu cepat atau terlalu lambat.
+                // Had toleransi ditetapkan pada 180 saat (3 minit).
+                const ageInSeconds = Math.abs(currentTime - qrTime) / 1000;
+
+                if (ageInSeconds > 180) {
+                    // QR Code sudah melepasi toleransi 3 minit. Sekat!
+                    document.getElementById('expired-box').classList.remove('hidden');
+                    return;
+                }
             }
+
+            // Lulus Semakan: Paparkan Borang
+            document.getElementById('form-box').classList.remove('hidden');
+            
+            document.getElementById('display-id').innerText = `ID: ${aid}`;
+            document.getElementById('display-title').innerText = title ? decodeURIComponent(title) : 'Sesi Latihan Tanpa Tajuk';
+            
+            document.getElementById('hidden-aid').value = aid;
+            document.getElementById('hidden-title').value = title ? decodeURIComponent(title) : 'Sesi Latihan Tanpa Tajuk';
+            document.getElementById('hidden-gform').value = gform ? decodeURIComponent(gform) : '';
         };
+
+        // --- LOGIK "LAIN-LAIN" UNTUK UNIT ---
+        document.getElementById('inp-unit').addEventListener('change', function(e) {
+            const lainInput = document.getElementById('inp-unit-lain');
+            if (e.target.value === 'Lain-lain') {
+                lainInput.classList.remove('hidden');
+                lainInput.setAttribute('required', 'true');
+            } else {
+                lainInput.classList.add('hidden');
+                lainInput.removeAttribute('required');
+                lainInput.value = ''; 
+            }
+        });
+
+        // --- LOGIK "LAIN-LAIN" UNTUK JAWATAN ---
+        document.getElementById('inp-role').addEventListener('change', function(e) {
+            const lainInput = document.getElementById('inp-role-lain');
+            if (e.target.value === 'Lain-lain') {
+                lainInput.classList.remove('hidden');
+                lainInput.setAttribute('required', 'true');
+            } else {
+                lainInput.classList.add('hidden');
+                lainInput.removeAttribute('required');
+                lainInput.value = '';
+            }
+        });
+
+        let isSubmitting = false;
+
+        document.getElementById('reg-form').addEventListener('submit', function() {
+            isSubmitting = true;
+            
+            document.getElementById('hidden-timestamp').value = new Date().toISOString();
+            document.getElementById('inp-name').value = document.getElementById('inp-name').value.trim().toUpperCase();
+            document.getElementById('inp-id').value = document.getElementById('inp-id').value.trim().toUpperCase();
+            
+            const selUnit = document.getElementById('inp-unit').value;
+            const finalUnit = (selUnit === 'Lain-lain') ? document.getElementById('inp-unit-lain').value.trim().toUpperCase() : selUnit;
+            document.getElementById('hidden-final-unit').value = finalUnit;
+
+            const selRole = document.getElementById('inp-role').value;
+            const finalRole = (selRole === 'Lain-lain') ? document.getElementById('inp-role-lain').value.trim().toUpperCase() : selRole;
+            document.getElementById('hidden-final-role').value = finalRole;
+
+            const btn = document.getElementById('btn-submit');
+            btn.innerHTML = `<span class="loader"></span> Menyimpan Rekod...`;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+        });
+
+        document.getElementById('hidden_iframe').addEventListener('load', function() {
+            if (isSubmitting) {
+                document.getElementById('form-box').classList.add('hidden');
+                document.getElementById('success-box').classList.remove('hidden');
+                
+                const gformUrl = document.getElementById('hidden-gform').value;
+                if (gformUrl && gformUrl.startsWith('http')) {
+                    document.getElementById('gform-container').classList.remove('hidden');
+                    document.getElementById('gform-link').href = gformUrl;
+                }
+            }
+        });
     </script>
 </body>
 </html>
