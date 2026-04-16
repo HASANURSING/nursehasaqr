@@ -13,12 +13,10 @@
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4 font-sans text-slate-800 relative z-0">
     
-    <!-- Latar Belakang Separuh Atas (Estetik) -->
+    <!-- Latar Belakang Separuh Atas -->
     <div class="absolute top-0 left-0 w-full h-[40vh] bg-[#ebe7f0] -z-10"></div>
 
-    <!-- Bahagian Tajuk Atas -->
     <div class="text-center mb-8 px-4 mt-8 md:mt-0">
-        <!-- Anda boleh tukar logo rasmi UiTM HASA di sini -->
         <img src="https://i.postimg.cc/9fcWGRWZ/Hospital-Al-Sultan-Abdullah.png" alt="Logo HASA" class="h-14 mx-auto mb-5 object-contain" style="filter: brightness(0) saturate(100%) invert(18%) sepia(82%) saturate(2256%) hue-rotate(256deg) brightness(85%) contrast(106%);">
         <h1 class="text-2xl md:text-3xl font-black text-[#4c1c81] tracking-tight">Pengesahan Kehadiran Latihan</h1>
         <p class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-2">JABATAN KEJURURAWATAN HASA</p>
@@ -27,109 +25,111 @@
     <!-- Kad Borang Utama -->
     <div class="bg-white max-w-md w-full rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-6 md:p-10 border border-slate-100">
         
-        <!-- Kotak Maklumat Sesi -->
+        <!-- KOTAK: Maklumat Sesi -->
         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center mb-8">
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Anda Sedang Mendaftar Untuk:</p>
             <h2 id="display-title" class="text-lg md:text-xl font-black text-[#4c1c81] uppercase leading-snug mb-4">Memuatkan Maklumat Sesi...</h2>
             <span class="bg-white border border-slate-200 text-slate-500 text-xs font-mono font-semibold px-4 py-1.5 rounded-lg shadow-sm" id="display-id">ID: SEDANG DISEMAK</span>
         </div>
 
+        <!-- FORM PENDAFTARAN -->
         <form id="form-registration" class="space-y-6">
             <input type="hidden" id="reg-session-id">
-            
-            <!-- Paparan Ralat UI -->
             <div id="error-box" class="hidden bg-red-50 text-red-600 p-4 rounded-xl text-sm font-bold border border-red-200 text-center animate-pulse"></div>
 
-            <!-- Input ID (Fokus Utama) -->
             <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Sila Masukkan No. Pekerja / ID</label>
                 <input type="text" id="r-id" required placeholder="CTH: U5-1234" class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl outline-none uppercase text-center focus:border-[#4c1c81] focus:ring-4 focus:ring-purple-100 transition-all text-xl md:text-2xl font-bold font-mono text-[#4c1c81] placeholder-slate-300">
             </div>
 
-            <!-- Borang Tambahan Tersembunyi (Untuk Peserta Luar) -->
             <div id="extended-form" class="hidden space-y-4 pt-4 border-t border-slate-100 animate-[fadeIn_0.3s_ease-out]">
                 <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mb-2">
                     <p class="text-xs font-semibold text-amber-700 text-center">Mod Peserta Luar diaktifkan. Sila isikan butiran di bawah untuk rekod sijil.</p>
                 </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Nama Penuh</label>
-                    <input type="text" id="r-name" placeholder="Nama mengikut kad pengenalan" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Jabatan / Institusi</label>
-                    <input type="text" id="r-unit-other" placeholder="Cth: Klinik Kesihatan Puncak Alam" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Jawatan</label>
-                    <input type="text" id="r-role" placeholder="Cth: Jururawat U29" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors">
-                </div>
+                <div><input type="text" id="r-name" placeholder="Nama Penuh" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
+                <div><input type="text" id="r-unit-other" placeholder="Jabatan / Institusi" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
+                <div><input type="text" id="r-role" placeholder="Jawatan & Gred" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
             </div>
 
-            <!-- Butang Submit -->
             <button type="submit" id="btn-submit" class="w-full bg-[#1e293b] text-white py-4 rounded-xl font-bold hover:bg-slate-800 shadow-xl shadow-slate-900/20 transition-all mt-6 flex items-center justify-center gap-2 active:scale-95 text-lg tracking-wide">
                 <span>Semak Rekod Staf</span>
             </button>
 
-            <!-- Pautan Toggle Peserta Luar -->
             <div class="text-center mt-6 pt-2">
-                <button type="button" onclick="toggleExtendedForm()" class="text-[13px] font-bold text-[#4c1c81] hover:text-purple-900 underline underline-offset-4 decoration-2 decoration-purple-200 hover:decoration-purple-500 transition-all">
-                    Peserta Luar (Bukan Staf HASA)? Daftar di sini.
-                </button>
+                <button type="button" onclick="toggleExtendedForm()" class="text-[13px] font-bold text-[#4c1c81] hover:text-purple-900 underline underline-offset-4 decoration-2 decoration-purple-200 hover:decoration-purple-500 transition-all">Peserta Luar (Bukan Staf HASA)? Daftar di sini.</button>
             </div>
         </form>
 
-        <!-- Skrin Berjaya -->
-        <div id="success-message" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-6">
-            <div class="w-24 h-24 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        <!-- SKRIN BERJAYA & PAPARAN BIODATA (BARU) -->
+        <div id="success-message" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-4">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
             </div>
-            <h3 class="text-2xl font-black text-slate-800 mb-2">Kehadiran Disahkan!</h3>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Kehadiran Disahkan!</h3>
+            <p class="text-sm font-medium text-slate-500 mb-6">Data anda telah direkodkan dalam sistem.</p>
             
-            <!-- Pengesahan Nama Pintar -->
-            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 my-5 inline-block mx-auto min-w-[250px]">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Direkodkan Atas Nama:</p>
-                <p id="success-staff-name" class="text-sm font-bold text-[#4c1c81] uppercase">-</p>
+            <!-- KAD BIODATA -->
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 rounded-2xl p-5 mb-6 text-left shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-[#4c1c81]"></div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2">Pengesahan Identiti</p>
+                
+                <div class="space-y-2">
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Nama Penuh</p>
+                        <p id="bio-name" class="text-sm font-bold text-slate-800 uppercase leading-snug">-</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">No. Pekerja</p>
+                            <p id="bio-id" class="text-sm font-bold text-[#4c1c81] uppercase font-mono">-</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Jawatan</p>
+                            <p id="bio-role" class="text-sm font-bold text-slate-700 uppercase truncate">-</p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Unit / Jabatan</p>
+                        <p id="bio-unit" class="text-sm font-bold text-slate-700 uppercase">-</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AUTO REDIRECT SECTION -->
+            <div id="gform-container" class="hidden">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                    <p class="text-xs font-bold text-blue-800 mb-1">Sila lengkapkan Penilaian CPD</p>
+                    <p class="text-[11px] text-blue-600">Anda akan dibawa ke Google Form dalam masa <strong id="redirect-countdown" class="text-lg mx-1">5</strong> saat...</p>
+                </div>
+                
+                <a id="gform-link" href="#" class="block w-full bg-[#f59e0b] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 transition-all text-sm tracking-wide uppercase flex justify-center items-center gap-2">
+                    <span>Isi Borang Sekarang</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
             </div>
 
-            <p id="success-desc" class="text-sm font-medium text-slate-500 mb-8 leading-relaxed">Terima kasih kerana menghadiri sesi ini.</p>
-            
-            <div id="gform-container" class="mt-4 hidden">
-                <p class="text-xs font-bold text-amber-700 bg-amber-50 p-3 rounded-lg mb-4 border border-amber-200">Sila lengkapkan Borang Penilaian CPD di bawah:</p>
-                <a id="gform-link" href="#" target="_blank" class="block w-full bg-[#f59e0b] text-white py-4 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 transition-all text-sm tracking-wide uppercase">Isi Borang Penilaian</a>
-            </div>
-
-            <button onclick="window.close();" class="mt-8 text-xs font-bold text-slate-400 hover:text-slate-600 underline underline-offset-4 tracking-widest uppercase">Tutup Tetingkap</button>
+            <!-- BUTANG TUTUP JIKA TIADA FORM -->
+            <button id="btn-close" onclick="window.close();" class="mt-6 text-xs font-bold text-slate-400 hover:text-slate-600 underline underline-offset-4 tracking-widest uppercase">Tutup Tetingkap</button>
         </div>
     </div>
 
-    <!-- Footer Copyright -->
-    <div class="mt-12 text-center text-[10px] font-bold text-slate-400 tracking-widest uppercase">
-        <p>Sistem Pengurusan Latihan & CPD</p>
-        <p class="mt-1">&copy; 2026 Jabatan Kejururawatan HASA</p>
-    </div>
-
     <script>
-        // MASUKKAN URL GOOGLE SCRIPT V3 ANDA DI SINI
+        // MASUKKAN URL GOOGLE SCRIPT ANDA DI SINI
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZIkmx0gCbl6Wgt90zYaBlQc6w6bGCDzswEyY8ppPDQvhG9ROWGtQl1resmdNj9ZrQ/exec';
-        
         let isOutsiderMode = false;
+        let countdownTimer;
 
         function toggleExtendedForm() {
             const el = document.getElementById('extended-form');
             const btn = document.getElementById('btn-submit');
             isOutsiderMode = !isOutsiderMode;
-            
             if(isOutsiderMode) {
                 el.classList.remove('hidden');
-                // Jadikan mandatori untuk peserta luar
                 document.getElementById('r-name').setAttribute('required', 'true');
-                document.getElementById('r-unit-other').setAttribute('required', 'true');
                 btn.innerHTML = "Sahkan Kehadiran Peserta Luar";
             } else {
                 el.classList.add('hidden');
-                // Buang mandatori
                 document.getElementById('r-name').removeAttribute('required');
-                document.getElementById('r-unit-other').removeAttribute('required');
                 btn.innerHTML = "Semak Rekod Staf";
             }
         }
@@ -146,11 +146,7 @@
             } else {
                 document.getElementById('display-title').innerText = "Ralat: URL Tidak Sah";
                 document.getElementById('display-id').innerText = "SILA IMBAS SEMULA";
-                document.getElementById('display-id').classList.replace('text-slate-500', 'text-red-500');
-                document.getElementById('display-id').classList.replace('border-slate-200', 'border-red-200');
                 document.getElementById('btn-submit').disabled = true;
-                document.getElementById('btn-submit').innerHTML = "Akses Ditolak";
-                document.getElementById('btn-submit').classList.replace('bg-[#1e293b]', 'bg-slate-300');
             }
         };
 
@@ -169,7 +165,6 @@
                 sessionId: document.getElementById('reg-session-id').value,
                 sessionTitle: document.getElementById('display-title').innerText,
                 staffId: document.getElementById('r-id').value.trim().toUpperCase(),
-                // Data ini hanya diisi jika mereka buka "Peserta Luar"
                 staffName: document.getElementById('r-name').value.trim().toUpperCase(),
                 unit: document.getElementById('r-unit-other').value.trim().toUpperCase(),
                 role: document.getElementById('r-role').value.trim().toUpperCase(),
@@ -177,40 +172,45 @@
             };
 
             try {
-                // Taktik Fetch JSON Pintar (Kebal CORS)
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payloadData)
+                    method: 'POST', body: JSON.stringify(payloadData)
                 });
-                
                 const result = await response.json();
 
                 if (result.status === "success") {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('success-message').classList.remove('hidden');
                     
-                    if(result.message) {
-                        document.getElementById('success-desc').innerText = result.message;
-                    }
+                    // MASUKKAN BIODATA YANG DITERIMA DARI GOOGLE SHEET KE DALAM KAD
+                    document.getElementById('bio-name').innerText = (result.staffName && result.staffName !== "-") ? result.staffName : "TIDAK JUMPA DALAM REKOD";
+                    document.getElementById('bio-id').innerText = result.staffId || payloadData.staffId;
+                    document.getElementById('bio-role').innerText = result.role || "TIADA REKOD";
+                    document.getElementById('bio-unit').innerText = result.unit || "TIADA REKOD";
 
-                    // Tunjukkan nama yang dipulangkan oleh pangkalan data
-                    if(result.staffName && result.staffName !== "-") {
-                         document.getElementById('success-staff-name').innerText = result.staffName;
-                    } else {
-                         document.getElementById('success-staff-name').innerText = payloadData.staffId;
-                    }
-
+                    // LOGIK ALIHAN AUTOMATIK (AUTO-REDIRECT)
                     const gformLink = new URLSearchParams(window.location.search).get('gform');
                     if(gformLink && gformLink.startsWith('http')) {
                         document.getElementById('gform-container').classList.remove('hidden');
+                        document.getElementById('btn-close').classList.add('hidden'); // Sorok butang tutup
                         document.getElementById('gform-link').href = gformLink;
+                        
+                        let countdown = 5;
+                        const countEl = document.getElementById('redirect-countdown');
+                        
+                        countdownTimer = setInterval(() => {
+                            countdown--;
+                            countEl.innerText = countdown;
+                            if(countdown <= 0) {
+                                clearInterval(countdownTimer);
+                                // Terus redirect ke Google Form menggunakan kaedah Replace
+                                window.location.replace(gformLink); 
+                            }
+                        }, 1000);
                     }
                 } else {
                     throw new Error(result.message || "Ralat Semasa Merekod.");
                 }
-
             } catch (error) {
-                console.error("Gagal Merekod:", error);
                 errorBox.innerText = `RALAT: ${error.message}`;
                 errorBox.classList.remove('hidden');
                 btn.innerHTML = originalBtnText;
