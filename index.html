@@ -107,7 +107,7 @@
                 
                 <a id="gform-link" href="#" class="block w-full bg-[#f59e0b] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 transition-all text-sm tracking-wide uppercase flex justify-center items-center gap-2">
                     <span>Isi Borang Sekarang</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
 
@@ -121,6 +121,19 @@
             </div>
             <h3 class="text-xl font-black text-slate-800 mb-2">Pendaftaran Ditolak</h3>
             <p class="text-sm font-medium text-slate-500 mb-6 bg-amber-50 p-4 rounded-xl border border-amber-200">Sistem mendapati <strong>anda telah pun mendaftar</strong> kehadiran untuk sesi latihan ini. Pendaftaran berganda tidak dibenarkan.</p>
+            
+            <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">
+                Tutup Tetingkap
+            </button>
+        </div>
+
+        <!-- SKRIN TAMAT TEMPOH (ANTI-KONGSI) -->
+        <div id="expired-screen" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-4">
+            <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
+            <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed">Kod QR ini telah tamat tempoh. <strong>Sistem ini dihalang daripada dikongsi melalui pautan luar (seperti WhatsApp).</strong> <br><br>Sila imbas semula kod QR yang terkini terus daripada skrin penganjur.</p>
             
             <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">
                 Tutup Tetingkap
@@ -164,7 +177,27 @@
             const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get('attend');
             const sessionTitle = urlParams.get('title') || 'Sesi Latihan Umum';
+            const scanTime = parseInt(urlParams.get('t') || '0', 10);
+            const isManualMode = urlParams.get('m') === '1'; // Bypass kalau admin klik 'Daftar Manual'
 
+            // ========================================================
+            // LOGIK KESELAMATAN ANTI-KONGSI (ANTI-SHARE LINK)
+            // ========================================================
+            if (!isManualMode && scanTime > 0) {
+                const currentTime = Math.floor(Date.now() / 1000);
+                const timeDiff = currentTime - scanTime;
+
+                // Jika pautan berusia lebih dari 30 saat (masa scan + load form)
+                // Ini bermaksud peserta copy link dan forward ke grup whatsapp
+                if (timeDiff > 30) {
+                    document.getElementById('form-registration').classList.add('hidden');
+                    document.getElementById('session-info-box').classList.add('hidden');
+                    document.getElementById('expired-screen').classList.remove('hidden');
+                    return; // Hentikan script dari memuatkan borang
+                }
+            }
+
+            // Teruskan paparan biasa jika pautan masih "segar" (fresh)
             if (sessionId) {
                 document.getElementById('reg-session-id').value = sessionId;
                 document.getElementById('display-title').innerText = sessionTitle;
@@ -207,7 +240,7 @@
                 const result = await response.json();
 
                 if (result.status === "duplicate") {
-                    // LOGIK BAHARU UNTUK BLOK SCAN 2 KALI
+                    // LOGIK BLOK SCAN 2 KALI
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('session-info-box').classList.add('hidden');
                     document.getElementById('duplicate-screen').classList.remove('hidden');
@@ -231,7 +264,7 @@
                     document.getElementById('bio-role').innerText = result.role || "TIADA REKOD";
                     document.getElementById('bio-unit').innerText = result.unit || "TIADA REKOD";
 
-                    // LOGIK ALIHAN AUTOMATIK (AUTO-REDIRECT)
+                    // LOGIK ALIHAN AUTOMATIK (AUTO-REDIRECT) KE GOOGLE FORM PENILAIAN
                     const gformLink = new URLSearchParams(window.location.search).get('gform');
                     if(gformLink && gformLink.startsWith('http')) {
                         document.getElementById('gform-container').classList.remove('hidden');
