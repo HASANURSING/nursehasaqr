@@ -47,6 +47,10 @@
                 <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mb-2">
                     <p class="text-xs font-semibold text-amber-700 text-center">Rekod tidak dijumpai. Sila isikan butiran profil lengkap anda untuk didaftarkan ke dalam pangkalan data.</p>
                 </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">No. Pekerja / No. Kad Pengenalan (IC)</label>
+                    <input type="text" id="r-new-id" placeholder="Cth: U5-1234 / 900101145678" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold font-mono focus:border-[#4c1c81] focus:bg-white transition-colors">
+                </div>
                 <div><input type="text" id="r-name" placeholder="Nama Penuh (Huruf Besar)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
                 <div><input type="text" id="r-bahagian" placeholder="Bahagian (Cth: Pengurusan / Perubatan)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
                 <div><input type="text" id="r-unit-other" placeholder="Unit / Wad Semasa" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
@@ -151,22 +155,44 @@
         function toggleExtendedForm() {
             const el = document.getElementById('extended-form');
             const btn = document.getElementById('btn-submit');
+            const inputGroup = document.getElementById('input-group');
             isOutsiderMode = !isOutsiderMode;
+            
             if(isOutsiderMode) {
                 el.classList.remove('hidden');
+                inputGroup.classList.add('hidden');
+                
+                document.getElementById('r-id').removeAttribute('required');
+                document.getElementById('r-new-id').setAttribute('required', 'true');
                 document.getElementById('r-name').setAttribute('required', 'true');
                 document.getElementById('r-bahagian').setAttribute('required', 'true');
                 document.getElementById('r-unit-other').setAttribute('required', 'true');
                 document.getElementById('r-role').setAttribute('required', 'true');
+                
+                // Salin nombor yang dah ditaip dari kotak atas ke kotak baru
+                if(document.getElementById('r-id').value.trim() !== '') {
+                    document.getElementById('r-new-id').value = document.getElementById('r-id').value.trim();
+                }
+
                 btn.innerHTML = "Daftar Profil & Sahkan Kehadiran";
                 btn.classList.replace('bg-[#1e293b]', 'bg-amber-600');
                 btn.classList.replace('hover:bg-slate-800', 'hover:bg-amber-700');
             } else {
                 el.classList.add('hidden');
+                inputGroup.classList.remove('hidden');
+
+                document.getElementById('r-new-id').removeAttribute('required');
+                document.getElementById('r-id').setAttribute('required', 'true');
                 document.getElementById('r-name').removeAttribute('required');
                 document.getElementById('r-bahagian').removeAttribute('required');
                 document.getElementById('r-unit-other').removeAttribute('required');
                 document.getElementById('r-role').removeAttribute('required');
+                
+                // Salin semula jika mereka tutup form
+                if(document.getElementById('r-new-id').value.trim() !== '') {
+                    document.getElementById('r-id').value = document.getElementById('r-new-id').value.trim();
+                }
+
                 btn.innerHTML = "Semak & Sahkan Kehadiran";
                 btn.classList.replace('bg-amber-600', 'bg-[#1e293b]');
                 btn.classList.replace('hover:bg-amber-700', 'hover:bg-slate-800');
@@ -219,11 +245,14 @@
             btn.disabled = true;
             errorBox.classList.add('hidden');
 
+            // Tangkap ID dari kotak yang sedang aktif
+            const finalStaffId = isOutsiderMode ? document.getElementById('r-new-id').value.trim().toUpperCase() : document.getElementById('r-id').value.trim().toUpperCase();
+
             const payloadData = {
                 action: 'rekod_kehadiran',
                 sessionId: document.getElementById('reg-session-id').value,
                 sessionTitle: document.getElementById('display-title').innerText,
-                staffId: document.getElementById('r-id').value.trim().toUpperCase(),
+                staffId: finalStaffId,
                 staffName: document.getElementById('r-name').value.trim().toUpperCase(),
                 bahagian: document.getElementById('r-bahagian') ? document.getElementById('r-bahagian').value.trim().toUpperCase() : "-",
                 unit: document.getElementById('r-unit-other').value.trim().toUpperCase(),
