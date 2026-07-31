@@ -204,24 +204,23 @@
             const scanTime = parseInt(urlParams.get('t') || '0', 10);
             const isManualMode = urlParams.get('m') === '1';
 
-            // SISTEM ANTI-KONGSI YANG SANGAT KETAT (15 Saat Sahaja!)
+            // SISTEM ANTI-KONGSI YANG SANGAT KETAT (HANYA SAH 15 SAAT)
             if (!isManualMode && scanTime > 0) {
                 const currentTime = Math.floor(Date.now() / 1000);
                 const timeDiff = currentTime - scanTime;
 
-                // Membenarkan ralat jam peranti sebanyak 15 saat (sebelum & selepas)
+                // Mengambil kira perbezaan masa telefon yang tidak selari (benarkan maksimum 15 saat dari masa QR dijana)
                 if (timeDiff > 15 || timeDiff < -15) {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('session-info-box').classList.add('hidden');
                     
-                    // Kemas kini mesej amaran supaya lebih tegas
                     const expiredScreen = document.getElementById('expired-screen');
                     expiredScreen.innerHTML = `
                         <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
-                        <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed"><strong>AMARAN KESELAMATAN:</strong> Pautan QR ini mempunya tempoh sah 15 saat sahaja untuk mengelakkan perkongsian di kumpulan WhatsApp.<br><br>Sila imbas semula kod QR yang terkini terus daripada skrin utama. *Pastikan jam di telefon anda adalah tepat dan selari.</p>
+                        <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed"><strong>SISTEM ANTI-KONGSI AKTIF:</strong> Kod QR ini telah tamat tempoh dan tidak boleh dikongsi melalui aplikasi luar.<br><br>Sila pastikan anda mengimbas secara langsung dari skrin utama di tempat latihan.</p>
                         <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">Tutup Tetingkap</button>
                     `;
                     expiredScreen.classList.remove('hidden');
