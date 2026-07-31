@@ -35,37 +35,54 @@
         <!-- FORM PENDAFTARAN -->
         <form id="form-registration" class="space-y-6">
             <input type="hidden" id="reg-session-id">
-            <div id="error-box" class="hidden bg-red-50 text-red-600 p-4 rounded-xl text-sm font-bold border border-red-200 text-center animate-pulse"></div>
+            <div id="error-box" class="hidden bg-rose-50 text-rose-600 p-4 rounded-xl text-sm font-bold border border-rose-200 text-center animate-pulse"></div>
 
-            <div id="input-group">
+            <div id="default-id-section">
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Sila Masukkan No. Pekerja / ID</label>
                 <input type="text" id="r-id" required placeholder="CONTOH: 123456" class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl outline-none uppercase text-center focus:border-[#4c1c81] focus:ring-4 focus:ring-purple-100 transition-all text-xl md:text-2xl font-bold font-mono text-[#4c1c81] placeholder-slate-300">
             </div>
 
-            <!-- BORANG TAMBAHAN (DIBUKA JIKA STAF TIADA REKOD ATAU KLIK BUTANG) -->
-            <div id="extended-form" class="hidden space-y-4 pt-4 border-t border-slate-100 animate-[fadeIn_0.3s_ease-out]">
-                <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mb-2">
-                    <p class="text-xs font-semibold text-amber-700 text-center">Sila isikan butiran profil lengkap anda untuk didaftarkan ke dalam sistem kami.</p>
+            <div id="extended-form" class="hidden space-y-4 animate-[fadeIn_0.3s_ease-out]">
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 mb-4">
+                    <p class="text-xs font-bold text-amber-800 text-center uppercase tracking-wider mb-1">Pendaftaran Staf Baharu / Peserta Luar</p>
+                    <p class="text-[10px] font-medium text-amber-700 text-center">Maklumat anda akan terus disimpan ke dalam sistem untuk imbasan masa hadapan.</p>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">No. Pekerja / No. Kad Pengenalan (IC)</label>
-                    <input type="text" id="r-new-id" placeholder="Cth: U5-1234 / 900101145678" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold font-mono focus:border-[#4c1c81] focus:bg-white transition-colors">
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">No. Pekerja / No. K/P (IC)</label>
+                    <input type="text" id="r-id-ext" placeholder="Mesti Diisi" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-bold font-mono focus:border-[#4c1c81] focus:ring-2 focus:ring-purple-100 transition-colors">
                 </div>
-                <div><input type="text" id="r-name" placeholder="Nama Penuh (Huruf Besar)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
-                <div><input type="text" id="r-bahagian" placeholder="Bahagian (Cth: Pengurusan / Perubatan)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
-                <div><input type="text" id="r-unit-other" placeholder="Unit / Wad Semasa" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
-                <div><input type="text" id="r-role" placeholder="Jawatan & Gred (Cth: JURURAWAT U29)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
-                <div><input type="text" id="r-pos" placeholder="Pos Basik (Jika ada, biarkan kosong jika tiada)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">Nama Penuh (Seperti Dalam Sijil)</label>
+                    <input type="text" id="r-name" placeholder="Nama Penuh" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:ring-2 focus:ring-purple-100 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">Wad / Unit Semasa / Institusi</label>
+                    <input type="text" id="r-unit-other" placeholder="Cth: Wad 3A / HKL" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:ring-2 focus:ring-purple-100 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">Jawatan & Gred</label>
+                    <input type="text" id="r-role" placeholder="Cth: Jururawat U29" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:ring-2 focus:ring-purple-100 transition-colors">
+                </div>
             </div>
 
             <button type="submit" id="btn-submit" class="w-full bg-[#1e293b] text-white py-4 rounded-xl font-bold hover:bg-slate-800 shadow-xl shadow-slate-900/20 transition-all mt-6 flex items-center justify-center gap-2 active:scale-95 text-lg tracking-wide">
-                <span>Semak & Sahkan Kehadiran</span>
+                <span>Semak Rekod Staf</span>
             </button>
 
             <div class="text-center mt-6 pt-2">
-                <button type="button" onclick="toggleExtendedForm()" class="text-[13px] font-bold text-[#4c1c81] hover:text-purple-900 underline underline-offset-4 decoration-2 decoration-purple-200 hover:decoration-purple-500 transition-all">Peserta Luar / Staf Baharu? Daftar di sini.</button>
+                <button type="button" onclick="toggleExtendedForm()" id="toggle-ext-btn" class="text-[13px] font-bold text-[#4c1c81] hover:text-purple-900 underline underline-offset-4 decoration-2 decoration-purple-200 hover:decoration-purple-500 transition-all">Peserta Luar / Staf Baharu? Daftar di sini.</button>
             </div>
         </form>
+
+        <!-- SKRIN PAUTAN LUPUT (ANTI-KONGSI HIBRID) -->
+        <div id="expired-screen" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-6">
+            <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
+            <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed"><strong>SISTEM ANTI-KONGSI AKTIF:</strong> Kod QR ini telah tamat tempoh dan tidak boleh dikongsi melalui aplikasi luar.<br><br>Sila pastikan anda mengimbas secara langsung dari skrin penganjur (Fizikal atau tayangan Google Meet).</p>
+            <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">Tutup Tetingkap</button>
+        </div>
 
         <!-- SKRIN BERJAYA & PAPARAN BIODATA -->
         <div id="success-message" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-4">
@@ -75,11 +92,9 @@
             <h3 class="text-xl font-black text-slate-800 mb-1">Kehadiran Disahkan!</h3>
             <p class="text-sm font-medium text-slate-500 mb-6">Data anda telah direkodkan dalam sistem.</p>
             
-            <!-- KAD BIODATA -->
             <div class="bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 rounded-2xl p-5 mb-6 text-left shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1.5 h-full bg-[#4c1c81]"></div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2">Pengesahan Identiti</p>
-                
                 <div class="space-y-2">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase">Nama Penuh</p>
@@ -102,98 +117,56 @@
                 </div>
             </div>
             
-            <!-- AUTO REDIRECT SECTION -->
             <div id="gform-container" class="hidden">
                 <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
                     <p class="text-xs font-bold text-blue-800 mb-1">Sila lengkapkan Penilaian CPD</p>
                     <p class="text-[11px] text-blue-600">Anda akan dibawa ke Google Form dalam masa <strong id="redirect-countdown" class="text-lg mx-1">5</strong> saat...</p>
                 </div>
-                
                 <a id="gform-link" href="#" class="block w-full bg-[#f59e0b] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-amber-600/30 hover:bg-amber-600 transition-all text-sm tracking-wide uppercase flex justify-center items-center gap-2">
                     <span>Isi Borang Sekarang</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
 
             <button id="btn-close" onclick="window.close();" class="mt-6 text-xs font-bold text-slate-400 hover:text-slate-600 underline underline-offset-4 tracking-widest uppercase">Tutup Tetingkap</button>
         </div>
-
-        <!-- SKRIN PENDUA (HALANG DOUBLE SCAN) -->
-        <div id="duplicate-screen" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-4">
-            <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            </div>
-            <h3 class="text-xl font-black text-slate-800 mb-2">Pendaftaran Ditolak</h3>
-            <p class="text-sm font-medium text-slate-500 mb-6 bg-amber-50 p-4 rounded-xl border border-amber-200">Sistem mendapati <strong>anda telah pun mendaftar</strong> kehadiran untuk sesi latihan ini. Pendaftaran berganda tidak dibenarkan.</p>
-            
-            <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">
-                Tutup Tetingkap
-            </button>
-        </div>
-
-        <!-- SKRIN TAMAT TEMPOH (ANTI-KONGSI) -->
-        <div id="expired-screen" class="hidden text-center animate-[fadeIn_0.5s_ease-out] py-4">
-            <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
-            <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed">Kod QR ini telah tamat tempoh. <strong>Sistem ini dihalang daripada dikongsi melalui pautan luar (seperti WhatsApp).</strong> <br><br>Sila imbas semula kod QR yang terkini terus daripada skrin penganjur.</p>
-            
-            <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">
-                Tutup Tetingkap
-            </button>
-        </div>
-
     </div>
 
     <script>
-        // MASUKKAN URL GOOGLE SCRIPT ANDA DI SINI
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZIkmx0gCbl6Wgt90zYaBlQc6w6bGCDzswEyY8ppPDQvhG9ROWGtQl1resmdNj9ZrQ/exec';
         let isOutsiderMode = false;
         let countdownTimer;
 
         function toggleExtendedForm() {
-            const el = document.getElementById('extended-form');
+            const extEl = document.getElementById('extended-form');
+            const defEl = document.getElementById('default-id-section');
             const btn = document.getElementById('btn-submit');
-            const inputGroup = document.getElementById('input-group');
+            const toggleBtn = document.getElementById('toggle-ext-btn');
+            
             isOutsiderMode = !isOutsiderMode;
             
             if(isOutsiderMode) {
-                el.classList.remove('hidden');
-                inputGroup.classList.add('hidden');
+                extEl.classList.remove('hidden');
+                defEl.classList.add('hidden');
+                
+                // Copy ID if user already started typing in the default box
+                const currentId = document.getElementById('r-id').value;
+                if(currentId) document.getElementById('r-id-ext').value = currentId;
                 
                 document.getElementById('r-id').removeAttribute('required');
-                document.getElementById('r-new-id').setAttribute('required', 'true');
+                document.getElementById('r-id-ext').setAttribute('required', 'true');
                 document.getElementById('r-name').setAttribute('required', 'true');
-                document.getElementById('r-bahagian').setAttribute('required', 'true');
-                document.getElementById('r-unit-other').setAttribute('required', 'true');
-                document.getElementById('r-role').setAttribute('required', 'true');
-                
-                if(document.getElementById('r-id').value.trim() !== '') {
-                    document.getElementById('r-new-id').value = document.getElementById('r-id').value.trim();
-                }
-
-                btn.innerHTML = "Daftar Profil & Sahkan Kehadiran";
-                btn.classList.replace('bg-[#1e293b]', 'bg-amber-600');
-                btn.classList.replace('hover:bg-slate-800', 'hover:bg-amber-700');
+                btn.innerHTML = "Sahkan Rekod Latihan";
+                toggleBtn.innerText = "Batal & Kembali ke Imbasan Staf";
             } else {
-                el.classList.add('hidden');
-                inputGroup.classList.remove('hidden');
-
-                document.getElementById('r-new-id').removeAttribute('required');
-                document.getElementById('r-id').setAttribute('required', 'true');
-                document.getElementById('r-name').removeAttribute('required');
-                document.getElementById('r-bahagian').removeAttribute('required');
-                document.getElementById('r-unit-other').removeAttribute('required');
-                document.getElementById('r-role').removeAttribute('required');
+                extEl.classList.add('hidden');
+                defEl.classList.remove('hidden');
                 
-                if(document.getElementById('r-new-id').value.trim() !== '') {
-                    document.getElementById('r-id').value = document.getElementById('r-new-id').value.trim();
-                }
-
-                btn.innerHTML = "Semak & Sahkan Kehadiran";
-                btn.classList.replace('bg-amber-600', 'bg-[#1e293b]');
-                btn.classList.replace('hover:bg-amber-700', 'hover:bg-slate-800');
+                document.getElementById('r-id-ext').removeAttribute('required');
+                document.getElementById('r-name').removeAttribute('required');
+                document.getElementById('r-id').setAttribute('required', 'true');
+                btn.innerHTML = "Semak Rekod Staf";
+                toggleBtn.innerText = "Peserta Luar / Staf Baharu? Daftar di sini.";
             }
         }
 
@@ -204,26 +177,16 @@
             const scanTime = parseInt(urlParams.get('t') || '0', 10);
             const isManualMode = urlParams.get('m') === '1';
 
-            // SISTEM ANTI-KONGSI YANG SANGAT KETAT (HANYA SAH 15 SAAT)
+            // SISTEM ANTI-KONGSI HIBRID (Benarkan 25 saat untuk tampung lag Google Meet)
             if (!isManualMode && scanTime > 0) {
                 const currentTime = Math.floor(Date.now() / 1000);
                 const timeDiff = currentTime - scanTime;
 
-                // Mengambil kira perbezaan masa telefon yang tidak selari (benarkan maksimum 15 saat dari masa QR dijana)
-                if (timeDiff > 15 || timeDiff < -15) {
+                // Perbezaan masa yang melebihi 25 saat akan disekat
+                if (timeDiff > 25 || timeDiff < -25) {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('session-info-box').classList.add('hidden');
-                    
-                    const expiredScreen = document.getElementById('expired-screen');
-                    expiredScreen.innerHTML = `
-                        <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
-                        <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed"><strong>SISTEM ANTI-KONGSI AKTIF:</strong> Kod QR ini telah tamat tempoh dan tidak boleh dikongsi melalui aplikasi luar.<br><br>Sila pastikan anda mengimbas secara langsung dari skrin utama di tempat latihan.</p>
-                        <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">Tutup Tetingkap</button>
-                    `;
-                    expiredScreen.classList.remove('hidden');
+                    document.getElementById('expired-screen').classList.remove('hidden');
                     return; 
                 }
             }
@@ -245,24 +208,22 @@
             const errorBox = document.getElementById('error-box');
             
             const originalBtnText = btn.innerHTML;
-            btn.innerHTML = `Menyemak Pangkalan Data... <svg class="animate-spin w-5 h-5 ml-2 inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            btn.innerHTML = `Mengesahkan Data... <svg class="animate-spin w-5 h-5 ml-2 inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
             btn.disabled = true;
             errorBox.classList.add('hidden');
 
-            const finalStaffId = isOutsiderMode ? document.getElementById('r-new-id').value.trim().toUpperCase() : document.getElementById('r-id').value.trim().toUpperCase();
+            const actualId = isOutsiderMode ? document.getElementById('r-id-ext').value : document.getElementById('r-id').value;
 
             const payloadData = {
                 action: 'rekod_kehadiran',
                 sessionId: document.getElementById('reg-session-id').value,
                 sessionTitle: document.getElementById('display-title').innerText,
-                staffId: finalStaffId,
+                staffId: actualId.trim().toUpperCase(),
                 staffName: document.getElementById('r-name').value.trim().toUpperCase(),
-                bahagian: document.getElementById('r-bahagian') ? document.getElementById('r-bahagian').value.trim().toUpperCase() : "-",
                 unit: document.getElementById('r-unit-other').value.trim().toUpperCase(),
                 role: document.getElementById('r-role').value.trim().toUpperCase(),
-                posBasik: document.getElementById('r-pos') ? document.getElementById('r-pos').value.trim().toUpperCase() : "-",
-                isManual: isOutsiderMode,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                isManual: isOutsiderMode
             };
 
             try {
@@ -271,23 +232,11 @@
                 });
                 const result = await response.json();
 
-                if (result.status === "duplicate") {
-                    document.getElementById('form-registration').classList.add('hidden');
-                    document.getElementById('session-info-box').classList.add('hidden');
-                    document.getElementById('duplicate-screen').classList.remove('hidden');
-                }
-                else if (result.status === "not_found") {
-                    errorBox.innerText = result.message;
-                    errorBox.classList.remove('hidden');
-                    if (!isOutsiderMode) toggleExtendedForm();
-                    btn.innerHTML = "Daftar Profil Baharu & Sahkan";
-                    btn.disabled = false;
-                }
-                else if (result.status === "success") {
+                if (result.status === "success") {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('success-message').classList.remove('hidden');
                     
-                    document.getElementById('bio-name').innerText = (result.staffName && result.staffName !== "-") ? result.staffName : "PROFIL BAHARU";
+                    document.getElementById('bio-name').innerText = (result.staffName && result.staffName !== "-") ? result.staffName : "REKOD BAHARU DISIMPAN";
                     document.getElementById('bio-id').innerText = result.staffId || payloadData.staffId;
                     document.getElementById('bio-role').innerText = result.role || "TIADA REKOD";
                     document.getElementById('bio-unit').innerText = result.unit || "TIADA REKOD";
@@ -295,7 +244,7 @@
                     const gformLink = new URLSearchParams(window.location.search).get('gform');
                     if(gformLink && gformLink.startsWith('http')) {
                         document.getElementById('gform-container').classList.remove('hidden');
-                        document.getElementById('btn-close').classList.add('hidden');
+                        document.getElementById('btn-close').classList.add('hidden'); 
                         document.getElementById('gform-link').href = gformLink;
                         
                         let countdown = 5;
@@ -310,7 +259,23 @@
                             }
                         }, 1000);
                     }
-                } else {
+                } 
+                else if (result.status === "duplicate") {
+                    document.getElementById('form-registration').classList.add('hidden');
+                    document.getElementById('session-info-box').classList.add('hidden');
+                    
+                    const expiredScreen = document.getElementById('expired-screen');
+                    expiredScreen.innerHTML = `
+                        <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">Pendaftaran Ditolak!</h3>
+                        <p class="text-sm font-medium text-slate-500 mb-6 bg-amber-50 p-4 rounded-xl border border-amber-200 text-left leading-relaxed"><strong>AMARAN:</strong> Anda telah pun mengesahkan kehadiran untuk sesi ini.<br><br>Sistem menghalang pendaftaran berganda untuk mengekalkan integriti laporan latihan.</p>
+                        <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">Tutup Tetingkap</button>
+                    `;
+                    expiredScreen.classList.remove('hidden');
+                }
+                else {
                     throw new Error(result.message || "Ralat Semasa Merekod.");
                 }
             } catch (error) {
