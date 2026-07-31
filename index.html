@@ -39,17 +39,17 @@
 
             <div id="input-group">
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Sila Masukkan No. Pekerja / ID</label>
-                <input type="text" id="r-id" required placeholder="CONTOH: 123456 / 90010114..." class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl outline-none uppercase text-center focus:border-[#4c1c81] focus:ring-4 focus:ring-purple-100 transition-all text-xl md:text-2xl font-bold font-mono text-[#4c1c81] placeholder-slate-300">
+                <input type="text" id="r-id" required placeholder="CONTOH: 123456" class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl outline-none uppercase text-center focus:border-[#4c1c81] focus:ring-4 focus:ring-purple-100 transition-all text-xl md:text-2xl font-bold font-mono text-[#4c1c81] placeholder-slate-300">
             </div>
 
-            <!-- BORANG TAMBAHAN (DIBUKA JIKA STAF TIADA REKOD) -->
+            <!-- BORANG TAMBAHAN (DIBUKA JIKA STAF TIADA REKOD ATAU KLIK BUTANG) -->
             <div id="extended-form" class="hidden space-y-4 pt-4 border-t border-slate-100 animate-[fadeIn_0.3s_ease-out]">
                 <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mb-2">
-                    <p class="text-xs font-semibold text-amber-700 text-center">Rekod tidak dijumpai. Sila isikan butiran profil lengkap anda untuk didaftarkan ke dalam pangkalan data.</p>
+                    <p class="text-xs font-semibold text-amber-700 text-center">Sila isikan butiran profil lengkap anda untuk didaftarkan ke dalam sistem kami.</p>
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1">No. Pekerja / No. Kad Pengenalan (IC)</label>
-                    <input type="text" id="r-new-id" placeholder="Cth: 123456 / 900101145678" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold font-mono focus:border-[#4c1c81] focus:bg-white transition-colors">
+                    <input type="text" id="r-new-id" placeholder="Cth: U5-1234 / 900101145678" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold font-mono focus:border-[#4c1c81] focus:bg-white transition-colors">
                 </div>
                 <div><input type="text" id="r-name" placeholder="Nama Penuh (Huruf Besar)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
                 <div><input type="text" id="r-bahagian" placeholder="Bahagian (Cth: Pengurusan / Perubatan)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none uppercase text-sm font-semibold focus:border-[#4c1c81] focus:bg-white transition-colors"></div>
@@ -169,7 +169,6 @@
                 document.getElementById('r-unit-other').setAttribute('required', 'true');
                 document.getElementById('r-role').setAttribute('required', 'true');
                 
-                // Salin nombor yang dah ditaip dari kotak atas ke kotak baru
                 if(document.getElementById('r-id').value.trim() !== '') {
                     document.getElementById('r-new-id').value = document.getElementById('r-id').value.trim();
                 }
@@ -188,7 +187,6 @@
                 document.getElementById('r-unit-other').removeAttribute('required');
                 document.getElementById('r-role').removeAttribute('required');
                 
-                // Salin semula jika mereka tutup form
                 if(document.getElementById('r-new-id').value.trim() !== '') {
                     document.getElementById('r-id').value = document.getElementById('r-new-id').value.trim();
                 }
@@ -204,26 +202,33 @@
             const sessionId = urlParams.get('attend');
             const sessionTitle = urlParams.get('title') || 'Sesi Latihan Umum';
             const scanTime = parseInt(urlParams.get('t') || '0', 10);
-            const isManualMode = urlParams.get('m') === '1'; // Bypass kalau admin klik 'Daftar Manual'
+            const isManualMode = urlParams.get('m') === '1';
 
-            // ========================================================
-            // LOGIK KESELAMATAN ANTI-KONGSI (ANTI-SHARE LINK)
-            // ========================================================
+            // SISTEM ANTI-KONGSI YANG SANGAT KETAT (15 Saat Sahaja!)
             if (!isManualMode && scanTime > 0) {
                 const currentTime = Math.floor(Date.now() / 1000);
                 const timeDiff = currentTime - scanTime;
 
-                // Jika pautan berusia lebih dari 30 saat (masa scan + load form)
-                // Ini bermaksud peserta copy link dan forward ke grup whatsapp
-                if (timeDiff > 30) {
+                // Membenarkan ralat jam peranti sebanyak 15 saat (sebelum & selepas)
+                if (timeDiff > 15 || timeDiff < -15) {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('session-info-box').classList.add('hidden');
-                    document.getElementById('expired-screen').classList.remove('hidden');
-                    return; // Hentikan script dari memuatkan borang
+                    
+                    // Kemas kini mesej amaran supaya lebih tegas
+                    const expiredScreen = document.getElementById('expired-screen');
+                    expiredScreen.innerHTML = `
+                        <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">Pautan Telah Luput!</h3>
+                        <p class="text-sm font-medium text-slate-500 mb-6 bg-rose-50 p-4 rounded-xl border border-rose-200 text-left leading-relaxed"><strong>AMARAN KESELAMATAN:</strong> Pautan QR ini mempunya tempoh sah 15 saat sahaja untuk mengelakkan perkongsian di kumpulan WhatsApp.<br><br>Sila imbas semula kod QR yang terkini terus daripada skrin utama. *Pastikan jam di telefon anda adalah tepat dan selari.</p>
+                        <button onclick="window.close();" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-slate-700 transition-all text-sm tracking-wide uppercase">Tutup Tetingkap</button>
+                    `;
+                    expiredScreen.classList.remove('hidden');
+                    return; 
                 }
             }
 
-            // Teruskan paparan biasa jika pautan masih "segar" (fresh)
             if (sessionId) {
                 document.getElementById('reg-session-id').value = sessionId;
                 document.getElementById('display-title').innerText = sessionTitle;
@@ -245,7 +250,6 @@
             btn.disabled = true;
             errorBox.classList.add('hidden');
 
-            // Tangkap ID dari kotak yang sedang aktif
             const finalStaffId = isOutsiderMode ? document.getElementById('r-new-id').value.trim().toUpperCase() : document.getElementById('r-id').value.trim().toUpperCase();
 
             const payloadData = {
@@ -269,18 +273,14 @@
                 const result = await response.json();
 
                 if (result.status === "duplicate") {
-                    // LOGIK BLOK SCAN 2 KALI
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('session-info-box').classList.add('hidden');
                     document.getElementById('duplicate-screen').classList.remove('hidden');
                 }
                 else if (result.status === "not_found") {
-                    // BUKA BORANG MANUAL UNTUK STAF YANG TIADA REKOD
                     errorBox.innerText = result.message;
                     errorBox.classList.remove('hidden');
-                    
                     if (!isOutsiderMode) toggleExtendedForm();
-                    
                     btn.innerHTML = "Daftar Profil Baharu & Sahkan";
                     btn.disabled = false;
                 }
@@ -293,7 +293,6 @@
                     document.getElementById('bio-role').innerText = result.role || "TIADA REKOD";
                     document.getElementById('bio-unit').innerText = result.unit || "TIADA REKOD";
 
-                    // LOGIK ALIHAN AUTOMATIK (AUTO-REDIRECT) KE GOOGLE FORM PENILAIAN
                     const gformLink = new URLSearchParams(window.location.search).get('gform');
                     if(gformLink && gformLink.startsWith('http')) {
                         document.getElementById('gform-container').classList.remove('hidden');
