@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imbas QR - HASA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="bg-slate-900 h-screen flex flex-col items-center justify-center overflow-hidden font-sans text-white">
+
+    <!-- MAKLUMAT SESI -->
+    <div class="text-center mb-8">
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight mb-4 uppercase" id="display-title">Sila Imbas Untuk Kehadiran</h1>
+        <p class="text-xl text-slate-300 font-semibold bg-white/10 py-2 px-6 rounded-full inline-block">Sediakan No. Pekerja / ID Anda</p>
+    </div>
+
+    <!-- KOTAK QR CODE GERGASI (REKAAN ASAL) -->
+    <div class="relative bg-white p-6 md:p-10 rounded-[3rem] shadow-[0_0_80px_rgba(168,85,247,0.4)]">
+        <!-- Bekas untuk render QR -->
+        <div id="qrcode" class="w-[300px] h-[300px] md:w-[450px] md:h-[450px] flex items-center justify-center"></div>
+        
+        <!-- Timer UI -->
+        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-red-600 text-white font-bold px-6 py-2 rounded-full flex items-center gap-2 shadow-lg shadow-red-500/50">
+            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <span id="timer-text" class="tracking-widest">TUKAR DALAM 8s</span>
+        </div>
+    </div>
+
+    <p class="mt-12 text-slate-400 font-mono text-sm tracking-widest text-center">
+        *PAUTAN BERUBAH SECARA DINAMIK SETIAP 8 SAAT UNTUK KESELAMATAN.<br>
+        TIDAK BOLEH DIKONGSI DI WHATSAPP.*
+    </p>
+
+    <script>
+        const BASE_REGISTRATION_URL = "https://hasanursing.github.io/nursehasaqr/index.html"; 
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('attend') || 'LATIHAN-UMUM-01';
+        const sessionTitle = urlParams.get('title') || 'SESI LATIHAN HASA';
+        const gformLink = urlParams.get('gform') || '';
+
+        document.getElementById('display-title').innerText = sessionTitle;
+
+        // Inisialisasi library QR Code
+        const qrContainer = document.getElementById("qrcode");
+        // Saiz QR gergasi mengikut peranti
+        const qrSize = window.innerWidth > 768 ? 450 : 300; 
+        
+        const qrcode = new QRCode(qrContainer, {
+            text: "Loading...",
+            width: qrSize,
+            height: qrSize,
+            colorDark : "#1e293b",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+
+        let countdown = 8; // Masa dipertatkan ke 8 saat
+
+        function refreshQRCode() {
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+            
+            let dynamicUrl = `${BASE_REGISTRATION_URL}?attend=${sessionId}&title=${encodeURIComponent(sessionTitle)}&t=${currentTimestamp}`;
+            if(gformLink) {
+                dynamicUrl += `&gform=${encodeURIComponent(gformLink)}`;
+            }
+
+            qrcode.clear();
+            qrcode.makeCode(dynamicUrl);
+            countdown = 8; // Refresh balik ke 8 saat
+        }
+
+        refreshQRCode();
+
+        setInterval(() => {
+            countdown--;
+            document.getElementById('timer-text').innerText = `TUKAR DALAM ${countdown}s`;
+            
+            if(countdown <= 0) {
+                refreshQRCode();
+            }
+        }, 1000); 
+    </script>
+</body>
+</html>
